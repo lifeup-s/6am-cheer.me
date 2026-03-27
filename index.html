@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하루 한 번, 당신을 위한 응원</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --accent-color: #7f8c8d;
+        }
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+            margin: 0;
+            color: var(--text-color);
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            max-width: 500px;
+        }
+        .date-label {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        #compliment {
+            font-size: 1.6rem;
+            font-weight: 600;
+            line-height: 1.6;
+            word-break: keep-all;
+            transition: opacity 0.5s ease;
+        }
+        hr {
+            width: 30px;
+            border: 0;
+            border-top: 2px solid #eee;
+            margin: 30px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="date-label" id="today-date">TODAY</div>
+        <div id="compliment">당신을 위한 문장을 준비 중입니다.</div>
+        <hr>
+    </div>
+
+    <script>
+        // 종교색 없는 보편적인 위로와 칭찬 문구 리스트 (최소 31개 권장)
+        const compliments = [
+            "당신의 존재 자체가 누군가에게는 오늘을 살아갈 이유가 됩니다.",
+            "실수해도 괜찮아요. 그것 또한 당신이 성장하고 있다는 증거니까요.",
+            "오늘 당신이 보여준 작은 성실함이 내일의 큰 빛이 될 거예요.",
+            "당신은 충분히 잘해내고 있습니다. 스스로를 너무 몰아세우지 마세요.",
+            "세상에 단 하나뿐인 당신이라는 존재는 그
