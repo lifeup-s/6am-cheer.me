@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morning Comments</title>
-    <meta name="description" content="매일 오전 6시, 당신을 위한 따뜻한 칭찬 한마디가 배달됩니다.">
-    <meta name="keywords" content="칭찬, 위로, 응원, 명언, 아침인사, 자존감">
-    <link rel="canonical" href="https://당신의주소.github.io/morning-comments">
+    
+    <title>Daily Encouragement - 매일 아침 당신을 위한 응원</title>
+    <meta name="description" content="매일 아침 6시, 당신의 하루를 응원하는 따뜻한 문장이 배달됩니다. Every morning at 6 AM, a warm message for your day.">
+    
+    <meta name="google-site-verification" content="여기에_구글이_준_코드를_넣으세요" />
+
     <style>
         :root {
-            /* 낮 테마 변수 */
             --bg-day: linear-gradient(135deg, #e0f2f1 0%, #fce4ec 100%);
             --text-day: #2c3e50;
-            --accent-day: #7f8c8d;
-            
-            /* 밤 테마 변수 */
             --bg-night: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
             --text-night: #ecf0f1;
-            --accent-night: #bdc3c7;
         }
 
         body {
@@ -26,57 +23,34 @@
             justify-content: center;
             align-items: center;
             margin: 0;
-            font-family: 'Pretendard', sans-serif;
-            transition: background 1s ease, color 1s ease; /* 배경 전환 효과 */
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            transition: background 1s ease, color 1s ease;
         }
 
-        /* 낮 스타일 */
-        body.day-mode {
-            background: var(--bg-day);
-            color: var(--text-day);
-        }
+        body.day-mode { background: var(--bg-day); color: var(--text-day); }
+        body.night-mode { background: var(--bg-night); color: var(--text-night); }
 
-        /* 밤 스타일 */
-        body.night-mode {
-            background: var(--bg-night);
-            color: var(--text-night);
-        }
-
-        .container {
-            text-align: center;
-            padding: 20px;
-            max-width: 700px;
-            z-index: 1;
-        }
-
+        .container { text-align: center; padding: 20px; max-width: 700px; }
+        
         #digital-clock {
-            font-size: 1.2rem;
-            font-family: 'Courier New', Courier, monospace; /* 디지털 느낌 */
+            font-size: 1.1rem;
+            font-family: monospace;
             letter-spacing: 2px;
-            margin-bottom: 10px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            opacity: 0.9;
         }
 
         #today-date {
             font-size: 0.9rem;
             margin-bottom: 40px;
-            opacity: 0.8;
+            opacity: 0.7;
         }
 
         #compliment {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             line-height: 1.6;
             word-break: keep-all;
-            margin-bottom: 50px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .footer-logo {
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            opacity: 0.5;
         }
     </style>
 </head>
@@ -84,156 +58,69 @@
 
     <div class="container">
         <div id="digital-clock">00:00:00</div>
-        <div id="today-date">2026. 00. 00</div>
-        
-        <div id="compliment">당신을 위한 문장을 준비 중입니다.</div>
-        
-        <div class="footer-logo">Morning Comments</div>
+        <div id="today-date">0000. 00. 00</div>
+        <div id="compliment">...</div>
     </div>
 
     <script>
-        const messages = [
-            "오늘 당신의 걸음걸음마다 행운이 깃들길 바라요.",
-            "당신은 충분히 잘해내고 있습니다. 스스로를 믿어주세요.",
-            "세상에 단 하나뿐인 당신의 존재는 그 자체로 소중합니다.",
-            "오늘 하루, 당신에게 가장 다정한 사람이 당신 자신이길.",
-            "작은 실수에 흔들리지 마세요. 당신은 더 큰 일을 할 사람입니다.",
-            "당신이 가진 부드러움은 세상을 바꾸는 가장 큰 힘입니다.",
-            "어제보다 조금 더 단단해진 당신의 오늘을 응원합니다.",
-            "누구보다 빛나는 당신의 진심을 세상이 곧 알아줄 거예요.",
-            "잠시 쉬어가도 괜찮아요. 당신의 노력은 사라지지 않으니까요.",
-            "오늘 당신의 미소가 누군가에게는 큰 위로가 될 거예요.",
-            "당신은 생각보다 훨씬 더 강한 사람입니다.",
-            "오늘 하루, 당신의 마음이 평온함으로 가득 차길 바랍니다.",
-            "조금 느려도 괜찮아요. 당신만의 속도가 가장 아름답습니다.",
-            "당신이 내딛는 모든 작은 발걸음이 위대한 여정의 시작입니다.",
-            "오늘도 무사히 하루를 시작한 당신, 이미 충분히 멋집니다.",
-            "당신의 친절함은 누군가의 어두운 하루를 밝히는 등불입니다.",
-            "어떤 상황에서도 당신의 가치는 변하지 않습니다.",
-            "스스로를 사랑하는 마음이 당신을 가장 아름답게 만듭니다.",
-            "당신의 꿈은 반드시 당신을 좋은 곳으로 데려다줄 거예요.",
-            "오늘 하루, 예상치 못한 기분 좋은 선물이 당신을 찾아가길.",
-            "당신은 사랑받기 위해 태어난 소중한 사람입니다.",
-            "힘든 시간을 견뎌낸 당신의 인내심에 박수를 보냅니다.",
-            "당신의 목소리는 누군가에게 꼭 필요한 위로가 됩니다.",
-            "오늘의 노력이 내일의 당신을 미소 짓게 할 거예요.",
-            "당신은 존재만으로도 주변을 환하게 밝히는 사람입니다.",
-            "완벽하지 않아도 괜찮아요. 당신은 그 자체로 충분하니까요.",
-            "당신의 열정은 그 어떤 보석보다 눈부시게 빛납니다.",
-            "오늘 하루, 마음껏 행복할 자격이 당신에게 있습니다.",
-            "당신이 품은 희망이 오늘을 살아갈 힘이 되어줄 거예요.",
-            "세상은 당신이 가진 고유한 색깔을 필요로 합니다.",
-            "당신은 누군가의 삶에서 가장 소중한 사람 중 한 명입니다.",
-            "오늘 일어나는 모든 일들이 당신에게 긍정적인 양분이 되길.",
-            "당신의 성실함이 쌓여 빛나는 미래를 만들고 있습니다.",
-            "어려움 속에서도 잃지 않는 당신의 미소가 아름답습니다.",
-            "당신은 어제보다 오늘 더 성장했습니다.",
-            "오늘 하루, 당신의 마음속에 따뜻한 햇살이 머물길 바랍니다.",
-            "당신이 보여준 용기가 누군가에게는 큰 희망이 됩니다.",
-            "스스로를 믿는 마음이 모든 불가능을 가능케 합니다.",
-            "오늘 당신의 손길이 닿는 곳마다 행복이 피어나길.",
-            "당신은 어떤 시련도 이겨낼 수 있는 단단한 마음을 가졌습니다.",
-            "당신이 가진 무한한 가능성을 믿어 의심치 않습니다.",
-            "오늘 하루, 당신의 삶이 한 편의 아름다운 시 같기를.",
-            "당신은 충분히 가치 있는 사람입니다. 잊지 마세요.",
-            "당신의 정직함은 당신을 가장 고귀한 사람으로 만듭니다.",
-            "오늘 하루, 마음속에 걱정보다는 설렘이 가득하길.",
-            "당신이 뿌린 선의의 씨앗이 오늘 큰 기쁨으로 돌아오길.",
-            "당신은 당신 인생의 주인공입니다. 멋진 무대를 응원합니다.",
-            "오늘 하루, 당신의 수고가 헛되지 않음을 느낄 수 있기를.",
-            "당신이 걷는 길에 항상 맑은 하늘이 함께하길 바랍니다.",
-            "당신은 세상에 긍정적인 변화를 일으키는 사람입니다.",
-            "오늘 하루, 당신의 모든 선택이 행복으로 이어지길.",
-            "당신은 참 따뜻한 사람입니다. 그 온기를 잃지 마세요.",
-            "당신의 노력은 언젠가 반드시 찬란한 꽃을 피울 것입니다.",
-            "오늘 하루, 당신의 마음이 솜사탕처럼 가볍고 포근하길.",
-            "당신은 충분히 멋진 사람입니다. 고개를 높이 드세요.",
-            "당신의 겸손함은 당신을 더욱 빛나게 하는 매력입니다.",
-            "오늘 하루, 당신이 만나는 모든 이들이 당신에게 친절하길.",
-            "당신은 삶의 파도를 멋지게 넘고 있는 항해사입니다.",
-            "당신의 창의적인 생각이 세상을 더 풍요롭게 만듭니다.",
-            "오늘 하루, 당신의 눈에 아름다운 것들만 담기길 바랍니다.",
-            "당신은 그 누구와도 비교할 수 없는 특별한 존재입니다.",
-            "당신의 인내와 끈기가 결국 승리를 가져다줄 거예요.",
-            "오늘 하루, 작은 것에서도 큰 행복을 발견하시길.",
-            "당신은 타인에게 긍정적인 영감을 주는 리더입니다.",
-            "당신의 솔직함이 사람들의 마음을 움직입니다.",
-            "오늘 하루, 당신의 몸과 마음이 모두 건강하길 바랍니다.",
-            "당신은 사랑과 배려를 아는 성숙한 사람입니다.",
-            "당신의 지혜로운 판단이 오늘 당신을 올바른 길로 인도하길.",
-            "오늘 하루, 당신의 웃음소리가 끊이지 않기를 바랍니다.",
-            "당신은 실패를 두려워하지 않는 용감한 도전자입니다.",
-            "당신의 세심한 배려가 세상을 더 살기 좋게 만듭니다.",
-            "오늘 하루, 당신의 꿈에 한 걸음 더 가까워지길.",
-            "당신은 언제나 최선을 다하고 있습니다. 그 사실을 믿으세요.",
-            "당신의 순수한 마음은 그 어떤 것보다 값진 보물입니다.",
-            "오늘 하루, 당신의 삶이 기적 같은 일들로 가득하길.",
-            "당신은 타인의 시선보다 자신의 행복에 더 집중할 자격이 있습니다.",
-            "당신이 가진 긍정의 에너지가 주변을 행복하게 만듭니다.",
-            "오늘 하루, 당신의 마음에 쉼표 하나를 선물해 보세요.",
-            "당신은 참으로 귀한 사람입니다. 자신을 소중히 여겨주세요.",
-            "당신의 끈기 있는 모습은 많은 이들에게 귀감이 됩니다.",
-            "오늘 하루, 당신이 원하는 모든 일들이 순조롭게 풀리길.",
-            "당신은 새로운 시작을 할 준비가 충분히 되어 있습니다.",
-            "당신의 배려 깊은 행동이 누군가의 마음을 녹일 거예요.",
-            "오늘 하루, 당신의 영혼이 자유롭고 평화롭길 바랍니다.",
-            "당신은 충분히 사랑스럽습니다. 그대로의 당신을 사랑하세요.",
-            "당신의 깊은 통찰력이 오늘 빛을 발할 것입니다.",
-            "오늘 하루, 당신의 노력이 결실을 맺는 기쁨을 맛보길.",
-            "당신은 비바람을 견디고 피어난 아름다운 꽃과 같습니다.",
-            "당신의 따뜻한 말 한마디가 세상을 치유합니다.",
-            "오늘 하루, 당신의 마음이 보석처럼 영롱하게 빛나길.",
-            "당신은 어려움을 기회로 바꾸는 놀라운 능력이 있습니다.",
-            "당신의 꾸준함이 당신을 가장 높은 곳으로 데려갈 거예요.",
-            "오늘 하루, 당신의 삶에 감사할 일들만 가득하길.",
-            "당신은 자신의 삶을 개척해 나가는 멋진 주인공입니다.",
-            "당신의 밝은 성격이 주변 사람들에게 행복을 전파합니다.",
-            "오늘 하루, 당신의 기분이 상쾌하고 가벼우면 좋겠습니다.",
-            "당신은 세상 그 무엇과도 바꿀 수 없는 소중한 사람입니다.",
-            "당신의 도전은 결과와 상관없이 그 자체로 위대합니다.",
-            "오늘 하루, 당신이 쏟은 정성만큼 큰 보람을 얻길 바랍니다.",
-            "언제나 당신을 응원하는 마음이 이곳에 있음을 잊지 마세요."
-        ];
+        // 언어별 문구 데이터
+        const languageData = {
+            ko: [
+                "오늘 당신의 걸음걸음마다 행운이 깃들길 바라요.",
+                "당신은 충분히 잘해내고 있습니다. 스스로를 믿어주세요.",
+                "세상에 단 하나뿐인 당신의 존재는 그 자체로 소중합니다.",
+                "오늘 하루, 당신에게 가장 다정한 사람이 당신 자신이길."
+                // ... (기존 100개 한국어 문구들)
+            ],
+            en: [
+                "May good luck follow every step you take today.",
+                "You are doing well enough. Please believe in yourself.",
+                "You are a unique and precious soul in this world.",
+                "I hope you are the kindest person to yourself today."
+                // ... (영어 문구 추가)
+            ]
+        };
 
         function updateUI() {
             const now = new Date();
             
-            // 1. 디지털 시계 업데이트
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('digital-clock').innerText = `${hours}:${minutes}:${seconds}`;
+            // 1. 시계 & 날짜
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
+            
+            const y = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            document.getElementById('today-date').innerText = `${y}. ${mm}. ${d}`;
 
-            // 2. 날짜 업데이트
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            document.getElementById('today-date').innerText = `${year}. ${month}. ${day}`;
-
-            // 3. 낮밤 배경 전환 (오전 6시 ~ 오후 6시 기준)
+            // 2. 낮밤 배경 (06:00~18:00 낮)
             if (now.getHours() >= 6 && now.getHours() < 18) {
-                document.body.classList.add('day-mode');
-                document.body.classList.remove('night-mode');
+                document.body.className = 'day-mode';
             } else {
-                document.body.classList.add('night-mode');
-                document.body.classList.remove('day-mode');
+                document.body.className = 'night-mode';
             }
 
-            // 4. 오늘의 문구 업데이트 (오전 6시 기준 갱신 로직)
+            // 3. 언어 감지 및 문구 설정
+            const userLang = navigator.language.substring(0, 2); // 'ko', 'en' 등 추출
+            const selectedLang = languageData[userLang] ? userLang : 'en'; // 지원 안하면 영어 기본
+            const currentList = languageData[selectedLang];
+
+            // 4. 오전 6시 기준 갱신 로직
             let displayDate = new Date(now);
-            if (now.getHours() < 6) {
-                displayDate.setDate(now.getDate() - 1);
-            }
+            if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
+            
             const dateSeed = (displayDate.getFullYear() * 10000) + 
                              ((displayDate.getMonth() + 1) * 100) + 
                              displayDate.getDate();
-            const index = dateSeed % messages.length;
-            document.getElementById('compliment').innerText = messages[index];
+            
+            const index = dateSeed % currentList.length;
+            document.getElementById('compliment').innerText = currentList[index];
         }
 
-        // 1초마다 업데이트 실행
         setInterval(updateUI, 1000);
-        updateUI(); // 초기 실행
+        updateUI();
     </script>
 </body>
 </html>
