@@ -3,62 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>하루 한 번, 당신을 위한 응원</title>
+    <title>Morning Comments</title>
     <style>
-        :root {
-            --bg-color: #fcfcfc;
-            --text-color: #2c3e50;
-            --accent-color: #7f8c8d;
-        }
         body {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: var(--bg-color);
-            font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+            background-color: #f8f9fa;
+            font-family: 'Pretendard', sans-serif;
             margin: 0;
-            color: var(--text-color);
+            color: #2d3436;
         }
         .container {
             text-align: center;
-            padding: 40px;
-            max-width: 500px;
+            padding: 30px;
         }
-        .date-label {
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+        .title {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: #636e72;
+            margin-bottom: 20px;
+            text-transform: uppercase;
         }
         #compliment {
-            font-size: 1.6rem;
-            font-weight: 600;
+            font-size: 1.8rem;
+            font-weight: 700;
             line-height: 1.6;
             word-break: keep-all;
-            transition: opacity 0.5s ease;
-        }
-        hr {
-            width: 30px;
-            border: 0;
-            border-top: 2px solid #eee;
-            margin: 30px auto;
+            max-width: 600px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="date-label" id="today-date">TODAY</div>
-        <div id="compliment">당신을 위한 문장을 준비 중입니다.</div>
-        <hr>
+        <div class="title">Morning Comments</div>
+        <div id="compliment">불러오는 중...</div>
     </div>
 
     <script>
-        // 종교색 없는 보편적인 위로와 칭찬 문구 리스트 (최소 31개 권장)
-        const compliments = [
-            "당신의 존재 자체가 누군가에게는 오늘을 살아갈 이유가 됩니다.",
-            "실수해도 괜찮아요. 그것 또한 당신이 성장하고 있다는 증거니까요.",
-            "오늘 당신이 보여준 작은 성실함이 내일의 큰 빛이 될 거예요.",
-            "당신은 충분히 잘해내고 있습니다. 스스로를 너무 몰아세우지 마세요.",
-            "세상에 단 하나뿐인 당신이라는 존재는 그
+        const messages = [
+            "오늘 당신의 걸음걸음마다 행운이 깃들길 바라요.",
+            "당신은 충분히 잘해내고 있습니다. 스스로를 믿어주세요.",
+            "세상에 단 하나뿐인 당신의 존재는 그 자체로 소중합니다.",
+            "오늘 하루, 당신에게 가장 다정한 사람이 당신 자신이길.",
+            "작은 실수에 흔들리지 마세요. 당신은 더 큰 일을 할 사람입니다.",
+            "당신이 가진 부드러움은 세상을 바꾸는 가장 큰 힘입니다.",
+            "어제보다 조금 더 단단해진 당신의 오늘을 응원합니다.",
+            "누구보다 빛나는 당신의 진심을 세상이 곧 알아줄 거예요.",
+            "잠시 쉬어가도 괜찮아요. 당신의 노력은 사라지지 않으니까요.",
+            "오늘 당신의 미소가 누군가에게는 큰 위로가 될 거예요."
+        ];
+
+        function updateMessage() {
+            const now = new Date();
+            let displayDate = new Date(now);
+
+            // 오전
