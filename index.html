@@ -8,11 +8,26 @@
 
     <style>
         :root {
+            /* 낮 테마 */
             --bg-day: linear-gradient(135deg, #e0f2f1 0%, #fce4ec 100%);
             --text-day: #2c3e50;
+            
+            /* 밤 테마 */
             --bg-night: linear-gradient(135deg, #1a1c2c 0%, #000000 100%);
             --text-night: #ecf0f1;
+            
+            /* 포인트 컬러 (연보라) */
             --point-purple: #a29bfe; 
+            
+            /* 낮 모드 선택기 스타일 */
+            --select-bg-day: #ffffff;
+            --select-text-day: #4834d4; /* 진한 보라색 */
+            --select-border-day: var(--point-purple);
+            
+            /* 밤 모드 선택기 스타일 */
+            --select-bg-night: rgba(44, 62, 80, 0.7); /* 어두운 반투명 */
+            --select-text-night: #ecf0f1; /* 하얀색 */
+            --select-border-night: rgba(162, 155, 254, 0.5); /* 은은한 연보라 */
         }
 
         body {
@@ -22,15 +37,24 @@
             align-items: center;
             margin: 0;
             font-family: 'Pretendard', -apple-system, sans-serif;
-            transition: background 1s ease, color 1s ease;
+            transition: background 1.2s ease, color 1.2s ease;
             overflow: hidden;
             position: relative;
         }
 
-        body.day-mode { background: var(--bg-day); color: var(--text-day); }
-        body.night-mode { background: var(--bg-night); color: var(--text-night); }
+        /* 낮 모드 스타일 반영 */
+        body.day-mode { 
+            background: var(--bg-day); 
+            color: var(--text-day); 
+        }
 
-        /* 언어 선택기 디자인 보완 */
+        /* 밤 모드 스타일 반영 */
+        body.night-mode { 
+            background: var(--bg-night); 
+            color: var(--text-night); 
+        }
+
+        /* 언어 선택기 디자인 개선 (낮밤 대응) */
         .lang-selector {
             position: absolute;
             top: 25px;
@@ -41,14 +65,31 @@
         .lang-selector select {
             padding: 10px 15px;
             border-radius: 20px;
-            border: 2px solid var(--point-purple);
-            background: #ffffff; /* 가독성을 위해 배경을 흰색으로 고정 */
-            color: #4834d4; /* 글자색 진한 보라색 고정 */
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             outline: none;
+            transition: all 0.5s ease; /* 낮밤 전환 시 부드럽게 */
+            -webkit-appearance: none; /* 기본 화살표 숨기기 (커스텀 디자인용) */
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        /* 낮 모드 시 언어 선택기 스타일 */
+        body.day-mode .lang-selector select {
+            background-color: var(--select-bg-day);
+            color: var(--select-text-day);
+            border: 2px solid var(--select-border-day);
+            box-shadow: 0 4px 10px rgba(162, 155, 254, 0.2);
+        }
+
+        /* 밤 모드 시 언어 선택기 스타일 (배경색 반영) */
+        body.night-mode .lang-selector select {
+            background-color: var(--select-bg-night);
+            color: var(--select-text-night);
+            border: 2px solid var(--select-border-night);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px); /* 은은한 블러 효과 추가 */
         }
 
         .container {
@@ -58,7 +99,7 @@
             width: 90%;
         }
 
-        /* 시간과 날짜: 중간 볼드 스타일 */
+        /* 시간과 날짜: 중간 볼드 스타일 (Semi-bold) */
         #digital-clock {
             font-size: 3.2rem;
             font-weight: 600; 
@@ -129,9 +170,9 @@
             es: ["Que la suerte acompañe cada paso que des hoy.", "Estás haciendo un gran trabajo.", "Eres una persona valiosa tal como eres."],
             fr: ["Que la chance accompagne chacun de vos pas aujourd'hui.", "Vous faites du bon travail.", "Vous êtes précieux tel que vous êtes."],
             de: ["Möge das Glück Sie heute auf jedem Schritt begleiten.", "Sie machen einen tollen Job.", "Du bist wertvoll, so wie du bist."],
-            pt: ["Que a sorte acompanhe cada passo que você der hoje.", "Você está fazendo um ótimo trabalho.", "Você é precioso do jeito que é."],
-            it: ["Che la fortuna accompagni ogni tuo passo oggi.", "Stai facendo un ottimo lavoro.", "Sei prezioso così come sei."],
-            ru: ["Пусть удача сопутствует каждому вашему шагу сегодня.", "Вы отлично справляетесь.", "Вы дра고ценны такие, какие вы есть."],
+            pt: ["Que a sorte accompane cada passo que você der hoje.", "Você está fazendo um ótimo trabalho.", "Você é precioso do jeito que é."],
+            it: ["Che la fortuna accompagni ogni tuo passo oggi.", "Stai facendo un ottimo lavoro.", "Sei prezioso così como sei."],
+            ru: ["Пусть удача сопутствует каждому вашему шагу сегодня.", "Вы отлично справляетесь.", "Вы драгоценны такие, какие вы есть."],
             ar: ["أتمنى أن يحالفك الحظ في كل خطوة تخطوها اليوم.", "أنت تبلي بلاءً حسناً. آمن بنفسك.", "أنت ثمين كما أنت."],
             hi: ["오늘 하루 당신의 모든 발걸음에 행운이 있기를 바랍니다.", "당신은 훌륭하게 해내고 있습니다.", "당신은 있는 그대로 소중합니다."],
             vi: ["Chúc may mắn theo mỗi bước chân của bạn hôm nay.", "Bạn đang làm rất tốt. Hãy tin vào chính mình.", "Bạn rất quý giá theo cách của riêng mình."],
@@ -168,7 +209,7 @@
             const dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
             document.getElementById('today-date').innerText = now.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : 'en-US', dateOptions);
 
-            // 3. 낮밤 배경 전환
+            // 3. 낮밤 배경 전환 및 선택기 디자인 업데이트
             document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
 
             // 4. 문구 갱신 (오전 6시 기준)
