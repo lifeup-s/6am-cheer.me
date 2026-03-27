@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Encouragement</title>
     <meta name="google-site-verification" content="Rr-XyZ1234567890abcdefg" />
-
     <style>
         :root {
             --bg-day: linear-gradient(135deg, #e0f2f1 0%, #fce4ec 100%);
@@ -155,4 +154,44 @@
 
         const selectEl = document.getElementById('language-select');
 
-        // 초기 언어 설정
+        // 초기 언어 설정 로직
+        let initialLang = localStorage.getItem('userLang') || 
+                         (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'en');
+        
+        let currentLang = initialLang;
+        selectEl.value = currentLang;
+
+        selectEl.addEventListener('change', (e) => {
+            currentLang = e.target.value;
+            localStorage.setItem('userLang', currentLang);
+            updateUI();
+        });
+
+        function updateUI() {
+            const now = new Date();
+            
+            // 시계 & 날짜
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
+            document.getElementById('today-date').innerText = now.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : 'en-US', {year:'numeric', month:'2-digit', day:'2-digit'});
+
+            // 낮밤 배경
+            document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
+
+            // 문구 갱신 (오전 6시 기준)
+            let displayDate = new Date(now);
+            if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
+            const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
+            
+            const currentList = languageData[currentLang] || languageData['en'];
+            document.getElementById('compliment').innerText = currentList[dateSeed % currentList.length];
+            document.getElementById('compliment').style.direction = (currentLang === 'ar' ? 'rtl' : 'ltr');
+        }
+
+        setInterval(updateUI, 1000);
+        updateUI();
+    </script>
+</body>
+</html>
