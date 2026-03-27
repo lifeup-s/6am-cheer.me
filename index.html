@@ -6,57 +6,86 @@
     <title>Morning Comments</title>
     <style>
         :root {
-            --bg-color: #fdfdfd;
-            --text-color: #34495e;
-            --sub-color: #95a5a6;
+            /* 낮 테마 변수 */
+            --bg-day: linear-gradient(135deg, #e0f2f1 0%, #fce4ec 100%);
+            --text-day: #2c3e50;
+            --accent-day: #7f8c8d;
+            
+            /* 밤 테마 변수 */
+            --bg-night: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
+            --text-night: #ecf0f1;
+            --accent-night: #bdc3c7;
         }
+
         body {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: var(--bg-color);
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             margin: 0;
-            color: var(--text-color);
-            overflow: hidden;
+            font-family: 'Pretendard', sans-serif;
+            transition: background 1s ease, color 1s ease; /* 배경 전환 효과 */
         }
+
+        /* 낮 스타일 */
+        body.day-mode {
+            background: var(--bg-day);
+            color: var(--text-day);
+        }
+
+        /* 밤 스타일 */
+        body.night-mode {
+            background: var(--bg-night);
+            color: var(--text-night);
+        }
+
         .container {
             text-align: center;
             padding: 20px;
-            max-width: 600px;
-            width: 90%;
+            max-width: 700px;
+            z-index: 1;
         }
-        .title {
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            color: var(--sub-color);
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            font-weight: 300;
+
+        #digital-clock {
+            font-size: 1.2rem;
+            font-family: 'Courier New', Courier, monospace; /* 디지털 느낌 */
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
+
+        #today-date {
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
         #compliment {
-            font-size: 1.7rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 700;
             line-height: 1.6;
             word-break: keep-all;
-            margin-bottom: 40px;
-            min-height: 100px;
+            margin-bottom: 50px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .line {
-            width: 40px;
-            height: 1px;
-            background-color: #ddd;
-            margin: 0 auto;
+
+        .footer-logo {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.5;
         }
     </style>
 </head>
-<body>
+<body class="day-mode">
 
     <div class="container">
-        <div class="title">Morning Comments</div>
-        <div id="compliment">오늘의 문장을 가져오고 있습니다.</div>
-        <div class="line"></div>
+        <div id="digital-clock">00:00:00</div>
+        <div id="today-date">2026. 00. 00</div>
+        
+        <div id="compliment">당신을 위한 문장을 준비 중입니다.</div>
+        
+        <div class="footer-logo">Morning Comments</div>
     </div>
 
     <script>
@@ -163,27 +192,45 @@
             "언제나 당신을 응원하는 마음이 이곳에 있음을 잊지 마세요."
         ];
 
-        function updateMessage() {
+        function updateUI() {
             const now = new Date();
-            let displayDate = new Date(now);
+            
+            // 1. 디지털 시계 업데이트
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('digital-clock').innerText = `${hours}:${minutes}:${seconds}`;
 
-            // 오전 6시 이전이라면 '어제' 날짜의 문구를 보여줌
+            // 2. 날짜 업데이트
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            document.getElementById('today-date').innerText = `${year}. ${month}. ${day}`;
+
+            // 3. 낮밤 배경 전환 (오전 6시 ~ 오후 6시 기준)
+            if (now.getHours() >= 6 && now.getHours() < 18) {
+                document.body.classList.add('day-mode');
+                document.body.classList.remove('night-mode');
+            } else {
+                document.body.classList.add('night-mode');
+                document.body.classList.remove('day-mode');
+            }
+
+            // 4. 오늘의 문구 업데이트 (오전 6시 기준 갱신 로직)
+            let displayDate = new Date(now);
             if (now.getHours() < 6) {
                 displayDate.setDate(now.getDate() - 1);
             }
-
-            // 날짜 기반 고유 숫자 생성 (20260327 형태)
             const dateSeed = (displayDate.getFullYear() * 10000) + 
                              ((displayDate.getMonth() + 1) * 100) + 
                              displayDate.getDate();
-
-            // 리스트 개수에 맞춰 순환 선택
             const index = dateSeed % messages.length;
-            
             document.getElementById('compliment').innerText = messages[index];
         }
 
-        updateMessage();
+        // 1초마다 업데이트 실행
+        setInterval(updateUI, 1000);
+        updateUI(); // 초기 실행
     </script>
 </body>
 </html>
