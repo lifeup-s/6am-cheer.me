@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Encouragement</title>
-    <meta name="google-site-verification" content="Rr-XyZ1234567890abcdefg" />
+    <meta name="google-site-verification" content="인증코드를_여기에_넣으세요" />
+
     <style>
         :root {
             --bg-day: linear-gradient(135deg, #e0f2f1 0%, #fce4ec 100%);
             --text-day: #2c3e50;
             --bg-night: linear-gradient(135deg, #1a1c2c 0%, #000000 100%);
             --text-night: #ecf0f1;
-            /* 연보라 포인트 컬러 */
             --point-purple: #a29bfe; 
         }
 
@@ -22,7 +22,7 @@
             align-items: center;
             margin: 0;
             font-family: 'Pretendard', -apple-system, sans-serif;
-            transition: background 1.2s ease, color 1.2s ease;
+            transition: background 1s ease, color 1s ease;
             overflow: hidden;
             position: relative;
         }
@@ -30,36 +30,25 @@
         body.day-mode { background: var(--bg-day); color: var(--text-day); }
         body.night-mode { background: var(--bg-night); color: var(--text-night); }
 
-        /* 언어 선택기 디자인 개선 */
+        /* 언어 선택기 디자인 보완 */
         .lang-selector {
             position: absolute;
-            top: 30px;
-            right: 30px;
+            top: 25px;
+            right: 25px;
             z-index: 100;
         }
 
         .lang-selector select {
-            padding: 10px 18px;
-            border-radius: 25px;
-            /* 연보라색 테두리와 그림자 */
+            padding: 10px 15px;
+            border-radius: 20px;
             border: 2px solid var(--point-purple);
-            background: rgba(255, 255, 255, 0.9);
-            color: #4834d4; /* 진한 보라색 글자 */
-            font-size: 0.9rem;
+            background: #ffffff; /* 가독성을 위해 배경을 흰색으로 고정 */
+            color: #4834d4; /* 글자색 진한 보라색 고정 */
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(162, 155, 254, 0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             outline: none;
-            transition: all 0.3s ease;
-            -webkit-appearance: none; /* 기본 화살표 숨기기 (커스텀 디자인용) */
-            -moz-appearance: none;
-            appearance: none;
-        }
-
-        .lang-selector select:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(162, 155, 254, 0.5);
-            background: #fff;
         }
 
         .container {
@@ -69,18 +58,18 @@
             width: 90%;
         }
 
-        /* 시간과 날짜: 중간 볼드 (Semi-bold) */
+        /* 시간과 날짜: 중간 볼드 스타일 */
         #digital-clock {
             font-size: 3.2rem;
-            font-weight: 600;
+            font-weight: 600; 
             letter-spacing: 2px;
             margin-bottom: 5px;
         }
 
         #today-date {
             font-size: 1.6rem;
-            font-weight: 500;
-            margin-bottom: 70px;
+            font-weight: 500; 
+            margin-bottom: 60px;
             opacity: 0.8;
         }
 
@@ -93,14 +82,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
 
         @media (max-width: 480px) {
-            #digital-clock { font-size: 2.4rem; }
-            #today-date { font-size: 1.3rem; }
-            #compliment { font-size: 1.8rem; }
-            .lang-selector { top: 20px; right: 20px; }
+            #digital-clock { font-size: 2.2rem; }
+            #today-date { font-size: 1.2rem; }
+            #compliment { font-size: 1.7rem; }
+            .lang-selector { top: 15px; right: 15px; }
         }
     </style>
 </head>
@@ -133,7 +121,6 @@
     </div>
 
     <script>
-        // 문구 데이터 (15개국어 예시 - 실제 운영 시 더 풍성하게 채우시면 좋습니다)
         const languageData = {
             ko: ["오늘 당신의 걸음걸음마다 행운이 깃들길 바라요.", "당신은 충분히 잘해내고 있습니다.", "존재만으로도 소중한 당신을 응원합니다."],
             en: ["May luck follow every step you take today.", "You are doing a great job. Believe in yourself.", "You are precious just as you are."],
@@ -144,23 +131,24 @@
             de: ["Möge das Glück Sie heute auf jedem Schritt begleiten.", "Sie machen einen tollen Job.", "Du bist wertvoll, so wie du bist."],
             pt: ["Que a sorte acompanhe cada passo que você der hoje.", "Você está fazendo um ótimo trabalho.", "Você é precioso do jeito que é."],
             it: ["Che la fortuna accompagni ogni tuo passo oggi.", "Stai facendo un ottimo lavoro.", "Sei prezioso così come sei."],
-            ru: ["Пусть удача сопутствует каждому вашему шагу сегодня.", "Вы отлично справляетесь.", "Вы драгоценны такие, какие вы есть."],
+            ru: ["Пусть удача сопутствует каждому вашему шагу сегодня.", "Вы отлично справляетесь.", "Вы дра고ценны такие, какие вы есть."],
             ar: ["أتمنى أن يحالفك الحظ في كل خطوة تخطوها اليوم.", "أنت تبلي بلاءً حسناً. آمن بنفسك.", "أنت ثمين كما أنت."],
-            hi: ["आज आपके हर कदम पर भाग्य आपका साथเด।", "आप बहुत अच्छा काम कर रहे हैं।", "आप जैसे हैं वैसे ही अनमोल हैं।"],
+            hi: ["오늘 하루 당신의 모든 발걸음에 행운이 있기를 바랍니다.", "당신은 훌륭하게 해내고 있습니다.", "당신은 있는 그대로 소중합니다."],
             vi: ["Chúc may mắn theo mỗi bước chân của bạn hôm nay.", "Bạn đang làm rất tốt. Hãy tin vào chính mình.", "Bạn rất quý giá theo cách của riêng mình."],
             th: ["ขอให้ความโชคดีติดตามคุณไปในทุกย่างก้าวในวันนี้", "คุณทำได้ดีมาก จงเชื่อมั่นในตัวเอง", "คุณมีค่าในแบบที่คุณเป็น"],
             id: ["Semoga keberuntungan menyertai setiap langkahmu hari ini.", "Kamu melakukan pekerjaan yang hebat.", "Kamu berharga apa adanya."]
         };
 
         const selectEl = document.getElementById('language-select');
-
-        // 초기 언어 설정 로직
-        let initialLang = localStorage.getItem('userLang') || 
-                         (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'en');
         
-        let currentLang = initialLang;
+        // 초기 언어 설정 (localStorage -> 브라우저 감지 -> 영어 순)
+        let savedLang = localStorage.getItem('userLang');
+        let browserLang = navigator.language.substring(0, 2);
+        let currentLang = savedLang || (languageData[browserLang] ? browserLang : 'en');
+        
         selectEl.value = currentLang;
 
+        // 언어 변경 이벤트
         selectEl.addEventListener('change', (e) => {
             currentLang = e.target.value;
             localStorage.setItem('userLang', currentLang);
@@ -170,28 +158,35 @@
         function updateUI() {
             const now = new Date();
             
-            // 시계 & 날짜
+            // 1. 시계 업데이트
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             const s = String(now.getSeconds()).padStart(2, '0');
             document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
-            document.getElementById('today-date').innerText = now.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : 'en-US', {year:'numeric', month:'2-digit', day:'2-digit'});
+            
+            // 2. 날짜 업데이트 (언어 설정 반영)
+            const dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            document.getElementById('today-date').innerText = now.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : 'en-US', dateOptions);
 
-            // 낮밤 배경
+            // 3. 낮밤 배경 전환
             document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
 
-            // 문구 갱신 (오전 6시 기준)
+            // 4. 문구 갱신 (오전 6시 기준)
             let displayDate = new Date(now);
             if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
             const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
             
             const currentList = languageData[currentLang] || languageData['en'];
-            document.getElementById('compliment').innerText = currentList[dateSeed % currentList.length];
+            const index = dateSeed % currentList.length;
+            document.getElementById('compliment').innerText = currentList[index];
+
+            // 아랍어 우측 정렬 처리
             document.getElementById('compliment').style.direction = (currentLang === 'ar' ? 'rtl' : 'ltr');
         }
 
-        setInterval(updateUI, 1000);
+        // 초기 실행 및 인터벌 설정
         updateUI();
+        setInterval(updateUI, 1000);
     </script>
 </body>
 </html>
