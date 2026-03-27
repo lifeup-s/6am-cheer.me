@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Daily Encouragement - 매일 아침 당신을 위한 응원</title>
-    <meta name="description" content="매일 아침 6시, 당신의 하루를 응원하는 따뜻한 문장이 배달됩니다. Every morning at 6 AM, a warm message for your day.">
+    <title>Daily Encouragement - 당신을 위한 오늘의 한마디</title>
+    <meta name="description" content="매일 아침 6시, 당신의 하루를 응원하는 따뜻한 문장이 업데이트됩니다. Every morning at 6 AM, a new encouraging message for you.">
     
-    <meta name="google-site-verification" content="여기에_구글이_준_코드를_넣으세요" />
+    <meta name="google-site-verification" content="복사한_인증_코드를_여기에_넣으세요" />
 
     <style>
         :root {
+            /* 낮 테마 */
             --bg-day: linear-gradient(135deg, #e0f2f1 0%, #fce4ec 100%);
             --text-day: #2c3e50;
-            --bg-night: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
+            /* 밤 테마 */
+            --bg-night: linear-gradient(135deg, #1a1c2c 0%, #000000 100%);
             --text-night: #ecf0f1;
         }
 
@@ -23,34 +25,49 @@
             justify-content: center;
             align-items: center;
             margin: 0;
-            font-family: 'Pretendard', -apple-system, sans-serif;
-            transition: background 1s ease, color 1s ease;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            transition: background 1.2s ease, color 1.2s ease;
+            overflow: hidden;
         }
 
         body.day-mode { background: var(--bg-day); color: var(--text-day); }
         body.night-mode { background: var(--bg-night); color: var(--text-night); }
 
-        .container { text-align: center; padding: 20px; max-width: 700px; }
-        
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        /* 시간과 날짜 스타일: 중간 정도의 볼드와 크기 조절 */
         #digital-clock {
-            font-size: 1.1rem;
-            font-family: monospace;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            opacity: 0.9;
+            font-size: 2.2rem; /* 크기 키움 */
+            font-weight: 600;   /* 중간 볼드 (Semi-bold) */
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
 
         #today-date {
-            font-size: 0.9rem;
-            margin-bottom: 40px;
-            opacity: 0.7;
+            font-size: 1.4rem; /* 크기 키움 */
+            font-weight: 500;   /* 중간 볼드 (Medium) */
+            margin-bottom: 50px;
+            opacity: 0.8;
         }
 
         #compliment {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             font-weight: 700;
-            line-height: 1.6;
+            line-height: 1.5;
             word-break: keep-all;
+            min-height: 120px;
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 480px) {
+            #digital-clock { font-size: 1.8rem; }
+            #today-date { font-size: 1.2rem; }
+            #compliment { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -58,58 +75,71 @@
 
     <div class="container">
         <div id="digital-clock">00:00:00</div>
-        <div id="today-date">0000. 00. 00</div>
+        <div id="today-date">2026. 03. 27</div>
         <div id="compliment">...</div>
     </div>
 
     <script>
-        // 언어별 문구 데이터
         const languageData = {
             ko: [
                 "오늘 당신의 걸음걸음마다 행운이 깃들길 바라요.",
                 "당신은 충분히 잘해내고 있습니다. 스스로를 믿어주세요.",
                 "세상에 단 하나뿐인 당신의 존재는 그 자체로 소중합니다.",
-                "오늘 하루, 당신에게 가장 다정한 사람이 당신 자신이길."
-                // ... (기존 100개 한국어 문구들)
+                "오늘 하루, 당신에게 가장 다정한 사람이 당신 자신이길.",
+                "작은 실수에 흔들리지 마세요. 당신은 더 큰 일을 할 사람입니다.",
+                "어제보다 조금 더 단단해진 당신의 오늘을 응원합니다.",
+                "누구보다 빛나는 당신의 진심을 세상이 곧 알아줄 거예요.",
+                "잠시 쉬어가도 괜찮아요. 당신의 노력은 사라지지 않으니까요.",
+                "당신은 생각보다 훨씬 더 강한 사람입니다.",
+                "오늘 당신의 미소가 누군가에게는 큰 위로가 될 거예요."
+                // ... (필요시 한국어 문구를 더 추가하세요)
             ],
             en: [
                 "May good luck follow every step you take today.",
-                "You are doing well enough. Please believe in yourself.",
+                "You are doing a great job. Please believe in yourself.",
                 "You are a unique and precious soul in this world.",
-                "I hope you are the kindest person to yourself today."
-                // ... (영어 문구 추가)
+                "I hope you are the kindest person to yourself today.",
+                "Don't be shaken by small mistakes. You are meant for greatness.",
+                "I root for your today, which is stronger than yesterday.",
+                "The world will soon recognize your shining sincerity.",
+                "It's okay to take a break. Your hard work never fades.",
+                "You are much stronger than you think you are.",
+                "Your smile today will be a great comfort to someone."
             ]
         };
 
         function updateUI() {
             const now = new Date();
             
-            // 1. 시계 & 날짜
+            // 1. 실시간 시계 업데이트 (중간 볼드 스타일 적용됨)
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             const s = String(now.getSeconds()).padStart(2, '0');
             document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
             
+            // 2. 날짜 업데이트
             const y = now.getFullYear();
             const mm = String(now.getMonth() + 1).padStart(2, '0');
             const d = String(now.getDate()).padStart(2, '0');
             document.getElementById('today-date').innerText = `${y}. ${mm}. ${d}`;
 
-            // 2. 낮밤 배경 (06:00~18:00 낮)
+            // 3. 낮밤 배경 전환 (오전 6시 ~ 오후 6시 기준)
             if (now.getHours() >= 6 && now.getHours() < 18) {
                 document.body.className = 'day-mode';
             } else {
                 document.body.className = 'night-mode';
             }
 
-            // 3. 언어 감지 및 문구 설정
-            const userLang = navigator.language.substring(0, 2); // 'ko', 'en' 등 추출
-            const selectedLang = languageData[userLang] ? userLang : 'en'; // 지원 안하면 영어 기본
+            // 4. 언어 감지 및 문구 설정 (브라우저 언어 기준)
+            const userLang = navigator.language.substring(0, 2);
+            const selectedLang = languageData[userLang] ? userLang : 'en';
             const currentList = languageData[selectedLang];
 
-            // 4. 오전 6시 기준 갱신 로직
+            // 5. 오전 6시 기준 갱신 로직
             let displayDate = new Date(now);
-            if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
+            if (now.getHours() < 6) {
+                displayDate.setDate(now.getDate() - 1);
+            }
             
             const dateSeed = (displayDate.getFullYear() * 10000) + 
                              ((displayDate.getMonth() + 1) * 100) + 
@@ -119,6 +149,7 @@
             document.getElementById('compliment').innerText = currentList[index];
         }
 
+        // 1초마다 실행
         setInterval(updateUI, 1000);
         updateUI();
     </script>
