@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Encouragement</title>
+    <title>Daily Wisdom - 당신을 위한 오늘의 명언</title>
     <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />
     <style>
         :root {
@@ -29,7 +29,7 @@
         body.day-mode { background: var(--bg-day); color: var(--text-day); }
         body.night-mode { background: var(--bg-night); color: var(--text-night); }
 
-        /* 언어 선택기 */
+        /* 언어 선택기 (낮밤 대응) */
         .lang-selector {
             position: absolute;
             top: 25px;
@@ -67,12 +67,11 @@
             width: 90%;
         }
 
-        /* 추가된 상단 고정 문구 스타일 */
         #top-message {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            margin-bottom: 20px;
-            opacity: 0.9;
+            margin-bottom: 15px;
+            opacity: 0.8;
             letter-spacing: 1px;
         }
 
@@ -84,28 +83,41 @@
         }
 
         #today-date {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 500; 
-            margin-bottom: 60px;
-            opacity: 0.7;
+            margin-bottom: 50px;
+            opacity: 0.6;
+        }
+
+        /* 명언 영역 스타일 */
+        .quote-box {
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         #compliment {
-            font-size: 2.3rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            line-height: 1.7;
+            line-height: 1.6;
             word-break: keep-all;
-            min-height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        /* 출처 스타일 */
+        #author {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.6;
+            font-style: italic;
         }
 
         @media (max-width: 480px) {
-            #top-message { font-size: 1rem; }
             #digital-clock { font-size: 2.2rem; }
-            #today-date { font-size: 1.1rem; }
-            #compliment { font-size: 1.7rem; }
+            #compliment { font-size: 1.6rem; }
+            #author { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -135,13 +147,16 @@
         <div id="top-message"></div>
         <div id="digital-clock">00:00:00</div>
         <div id="today-date">0000. 00. 00</div>
-        <div id="compliment">...</div>
+        
+        <div class="quote-box">
+            <div id="compliment">...</div>
+            <div id="author"></div>
+        </div>
     </div>
 
     <script>
-        // 상단 고정 문구 데이터
         const topMessages = {
-            ko: "매일일 소중한 당신을 위한 아침 메시지",
+            ko: "당신은 매일 소중합니다.",
             en: "You are precious every single day.",
             ja: "あなたは毎日大切です。",
             zh: "每一天的你都很珍贵。",
@@ -158,22 +173,24 @@
             id: "Anda berharga setiap hari."
         };
 
+        // 명언 데이터 구조: { q: "명언", a: "저자" }
         const languageData = {
-            ko: ["오늘 당신의 걸음걸음마다 행운이 깃들길 바라요.", "당신은 충분히 잘해내고 있습니다.", "존재만으로도 소중한 당신을 응원합니다."],
-            en: ["May luck follow every step you take today.", "You are doing a great job. Believe in yourself.", "You are precious just as you are."],
-            ja: ["今日の一歩一歩に幸運が宿りますように。", "あなたは十分に頑張っています。", "あなたの存在そのものが宝物です。"],
-            zh: ["愿好运伴随你今天的每一步。", "你做得很好，请相信自己。", "你的存在本身就是一种美好。"],
-            es: ["Que la suerte acompañe cada paso que des hoy.", "Estás haciendo un gran trabajo.", "Eres una persona valiosa tal como eres."],
-            fr: ["Que la chance accompagne chacun de vos pas aujourd'hui.", "Vous faites du bon travail.", "Vous êtes précieux tel que vous êtes."],
-            de: ["Möge das Glück Sie heute auf jedem Schritt begleiten.", "Sie machen einen tollen Job.", "Du bist wertvoll, so wie du bist."],
-            pt: ["Que a sorte acompanhe cada passo que você der hoje.", "Você está fazendo um ótimo trabalho.", "Você é precioso do jeito que é."],
-            it: ["Che la fortuna accompagni ogni tuo passo oggi.", "Stai facendo un ottimo lavoro.", "Sei prezioso così come sei."],
-            ru: ["Пусть удача сопутствует каждому вашему шагу сегодня.", "Вы отлично справляетесь.", "Вы драгоценны такие, какие вы есть."],
-            ar: ["أتمنى أن يحالفك الحظ في كل خطوة تخطوها اليوم.", "أنت تبلي بلاءً حسناً. آمن بنفسك.", "أنت ثمين كما أنت."],
-            hi: ["आज आपके हर कदम पर भाग्य आपका साथ दे।", "आप बहुत अच्छा काम कर रहे हैं।", "आप जैसे हैं वैसे ही अनमोल हैं।"],
-            vi: ["Chúc may mắn theo mỗi bước chân của bạn hôm nay.", "Bạn đang làm rất tốt. Hãy tin vào chính mình.", "Bạn rất quý giá theo cách của riêng mình."],
-            th: ["ขอให้ความโชคดีติดตามคุณไปในทุกย่างก้าวในวันนี้", "คุณทำได้ดีมาก จงเชื่อมั่นในตัวเอง", "คุณมีค่าในแบบที่คุณเป็น"],
-            id: ["Semoga keberuntungan menyertai setiap langkahmu hari ini.", "Kamu melakukan pekerjaan yang hebat.", "Kamu berharga apa adanya."]
+            ko: [
+                {q: "행복은 여정이지 목적지가 아니다.", a: "알프레드 디 수자"},
+                {q: "어둠 속에서도 빛을 발견하는 법을 배워라.", a: "아리스토텔레스"},
+                {q: "가장 빛나는 별은 가장 어두운 밤에 보인다.", a: "고전 격언"}
+            ],
+            en: [
+                {q: "Happiness is a journey, not a destination.", a: "Alfred D'Souza"},
+                {q: "Focus to see the light in your darkest moments.", a: "Aristotle"},
+                {q: "The stars shine brightest in the darkest night.", a: "Proverb"}
+            ],
+            ja: [
+                {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"},
+                {q: "最も暗い夜に、星は最も輝く。", a: "格言"},
+                {q: "小さな変化の中に、真実の生がある。", a: "レフ・톨스토이"}
+            ],
+            // ... 다른 언어도 같은 구조({q: "", a: ""})로 추가 가능합니다.
         };
 
         const selectEl = document.getElementById('language-select');
@@ -192,10 +209,8 @@
         function updateUI() {
             const now = new Date();
             
-            // 1. 상단 고정 메시지 업데이트
             document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
             
-            // 2. 시계 및 날짜
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             const s = String(now.getSeconds()).padStart(2, '0');
@@ -204,21 +219,21 @@
             const dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
             document.getElementById('today-date').innerText = now.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : 'en-US', dateOptions);
 
-            // 3. 낮밤 배경 및 선택기 디자인
             document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
 
-            // 4. 하단 응원 문구 갱신 (오전 6시 기준)
             let displayDate = new Date(now);
             if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
             const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
             
             const currentList = languageData[currentLang] || languageData['en'];
-            document.getElementById('compliment').innerText = currentList[dateSeed % currentList.length];
+            const selectedQuote = currentList[dateSeed % currentList.length];
+            
+            // 명언과 저자 출력
+            document.getElementById('compliment').innerText = selectedQuote.q;
+            document.getElementById('author').innerText = `- ${selectedQuote.a}`;
 
-            // 아랍어 우측 정렬
             const isRtl = currentLang === 'ar';
-            document.getElementById('compliment').style.direction = isRtl ? 'rtl' : 'ltr';
-            document.getElementById('top-message').style.direction = isRtl ? 'rtl' : 'ltr';
+            document.querySelector('.quote-box').style.direction = isRtl ? 'rtl' : 'ltr';
         }
 
         updateUI();
