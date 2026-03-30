@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Wisdom - 당신을 위한 오늘의 명언</title>
+    <title>Daily Wisdom - Moments of Light</title>
     <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />
     <style>
+        /* 모던한 폰트 불러오기 (Pretendard) */
+        @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
         :root {
-            --bg-day: linear-gradient(135deg, #e0f2f1 0%, #fce4ec 100%);
-            --text-day: #2c3e50;
-            --bg-night: linear-gradient(135deg, #1a1c2c 0%, #000000 100%);
-            --text-night: #ecf0f1;
-            --point-purple: #a29bfe; 
+            --bg-day: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --text-day: #1a1a1a;
+            --bg-night: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+            --text-night: #f8fafc;
+            --accent: #a29bfe; 
         }
 
         body {
             height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            justify-content: space-between; /* 상단과 중앙 분리 */
             margin: 0;
             font-family: 'Pretendard', -apple-system, sans-serif;
-            transition: background 1s ease, color 1s ease;
+            transition: background 1.5s ease, color 1.5s ease;
             overflow: hidden;
             position: relative;
         }
@@ -29,95 +32,91 @@
         body.day-mode { background: var(--bg-day); color: var(--text-day); }
         body.night-mode { background: var(--bg-night); color: var(--text-night); }
 
-        /* 언어 선택기 (낮밤 대응) */
+        /* 언어 선택기 - 더 심플하게 */
         .lang-selector {
             position: absolute;
-            top: 25px;
-            right: 25px;
+            top: 20px;
+            right: 20px;
             z-index: 100;
         }
 
         .lang-selector select {
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
+            border: 1px solid rgba(128, 128, 128, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: inherit;
+            backdrop-filter: blur(10px);
             outline: none;
-            transition: all 0.5s ease;
+            transition: 0.3s;
         }
 
-        body.day-mode .lang-selector select {
-            background-color: #ffffff;
-            color: #4834d4;
-            border: 2px solid var(--point-purple);
-        }
-
-        body.night-mode .lang-selector select {
-            background-color: rgba(44, 62, 80, 0.7);
-            color: #ecf0f1;
-            border: 2px solid rgba(162, 155, 254, 0.5);
-            backdrop-filter: blur(5px);
-        }
-
-        .container {
-            text-align: center;
-            padding: 20px;
-            max-width: 850px;
-            width: 90%;
-        }
-
+        /* 1. 상단 메시지: 더 위로 배치 */
         #top-message {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 15px;
-            opacity: 0.8;
-            letter-spacing: 1px;
-        }
-
-        #digital-clock {
-            font-size: 3.2rem;
-            font-weight: 600; 
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        #today-date {
-            font-size: 1.5rem;
-            font-weight: 500; 
-            margin-bottom: 50px;
+            margin-top: 40px;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.2em; /* 자간을 넓혀 모던함 강조 */
+            text-align: center;
             opacity: 0.6;
+            text-transform: uppercase;
         }
 
-        /* 명언 영역 스타일 */
-        .quote-box {
-            min-height: 220px;
+        /* 중앙 컨테이너: 간격 최적화 */
+        .main-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 0 10%;
+            text-align: center;
+        }
+
+        /* 2. 시간 스타일: 세련되고 얇은 볼드 */
+        #digital-clock {
+            font-size: 4.5rem;
+            font-weight: 700;
+            letter-spacing: -0.05em; /* 숫자는 붙여야 모던함 */
+            margin-bottom: 0; /* 간격 대폭 축소 */
+            line-height: 1;
+        }
+
+        #today-date {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 40px; /* 시간과 명언 사이의 적절한 거리 */
+            opacity: 0.5;
+            letter-spacing: 0.1em;
+        }
+
+        /* 3. 명언과 출처 간격 축소 */
+        .quote-container {
+            max-width: 700px;
         }
 
         #compliment {
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 1.6;
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.4;
             word-break: keep-all;
-            margin-bottom: 15px;
+            margin-bottom: 10px; /* 명언과 출처 사이 아주 좁게 */
         }
 
-        /* 출처 스타일 */
         #author {
-            font-size: 1.1rem;
-            font-weight: 500;
-            opacity: 0.6;
-            font-style: italic;
+            font-size: 0.9rem;
+            font-weight: 300;
+            opacity: 0.4;
+            letter-spacing: 0.05em;
         }
 
-        @media (max-width: 480px) {
-            #digital-clock { font-size: 2.2rem; }
-            #compliment { font-size: 1.6rem; }
-            #author { font-size: 0.9rem; }
+        @media (max-width: 768px) {
+            #digital-clock { font-size: 3.5rem; }
+            #compliment { font-size: 1.4rem; }
+            #top-message { margin-top: 60px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -125,78 +124,60 @@
 
     <div class="lang-selector">
         <select id="language-select">
-            <option value="ko">KOREAN 🇰🇷</option>
-            <option value="en">ENGLISH 🇺🇸</option>
-            <option value="ja">JAPANESE 🇯🇵</option>
-            <option value="zh">CHINESE 🇨🇳</option>
-            <option value="es">SPANISH 🇪🇸</option>
-            <option value="fr">FRENCH 🇫🇷</option>
-            <option value="de">GERMAN 🇩🇪</option>
-            <option value="pt">PORTUGUESE 🇵🇹</option>
-            <option value="it">ITALIAN 🇮🇹</option>
-            <option value="ru">RUSSIAN 🇷🇺</option>
-            <option value="ar">ARABIC 🇸🇦</option>
-            <option value="hi">HINDI 🇮🇳</option>
-            <option value="vi">VIETNAMESE 🇻🇳</option>
-            <option value="th">THAI 🇹🇭</option>
-            <option value="id">INDONESIAN 🇮🇩</option>
+            <option value="ko">KR</option>
+            <option value="en">EN</option>
+            <option value="ja">JP</option>
+            <option value="zh">CN</option>
+            <option value="fr">FR</option>
+            <option value="de">DE</option>
+            <option value="es">ES</option>
         </select>
     </div>
 
-    <div class="container">
-        <div id="top-message"></div>
-        <div id="digital-clock">00:00:00</div>
-        <div id="today-date">0000. 00. 00</div>
+    <div id="top-message">YOU ARE PRECIOUS EVERY DAY</div>
+
+    <div class="main-content">
+        <div id="digital-clock">00:00</div>
+        <div id="today-date">2026. 03. 31</div>
         
-        <div class="quote-box">
-            <div id="compliment">...</div>
+        <div class="quote-container">
+            <div id="compliment">Loading Wisdom...</div>
             <div id="author"></div>
         </div>
     </div>
 
     <script>
         const topMessages = {
-            ko: "당신은 매일 소중합니다.",
-            en: "You are precious every single day.",
-            ja: "あなたは毎日大切です。",
-            zh: "每一天的你都很珍贵。",
-            es: "Eres valioso cada día.",
-            fr: "Tu es précieux chaque jour.",
-            de: "Du bist jeden Tag wertvoll.",
-            pt: "Você é precioso todos os dias.",
-            it: "Sei prezioso ogni singolo giorno.",
-            ru: "Вы драгоценны каждый день.",
-            ar: "أنت ثمين في كل يوم.",
-            hi: "आप हर दिन अनमोल हैं।",
-            vi: "Bạn quý giá mỗi ngày.",
-            th: "คุณมีค่าในทุกๆ วัน",
-            id: "Anda berharga setiap hari."
+            ko: "당신은 매일 소중합니다",
+            en: "YOU ARE PRECIOUS EVERY DAY",
+            ja: "あなたは毎日大切です",
+            zh: "每一天的你都很珍贵",
+            fr: "TU ES PRÉCIEUX CHAQUE JOUR",
+            de: "DU BIST JEDEN TAG WERTVOLL",
+            es: "ERES VALIOSO CADA DÍA"
         };
 
-        // 명언 데이터 구조: { q: "명언", a: "저자" }
         const languageData = {
             ko: [
+                {q: "가장 빛나는 별은 어두운 밤에 보인다.", a: "고전 격언"},
                 {q: "행복은 여정이지 목적지가 아니다.", a: "알프레드 디 수자"},
-                {q: "어둠 속에서도 빛을 발견하는 법을 배워라.", a: "아리스토텔레스"},
-                {q: "가장 빛나는 별은 가장 어두운 밤에 보인다.", a: "고전 격언"}
+                {q: "어둠 속에서도 빛을 발견하는 법을 배워라.", a: "아리스토텔레스"}
             ],
             en: [
+                {q: "Stars shine brightest in the dark.", a: "Proverb"},
                 {q: "Happiness is a journey, not a destination.", a: "Alfred D'Souza"},
-                {q: "Focus to see the light in your darkest moments.", a: "Aristotle"},
-                {q: "The stars shine brightest in the darkest night.", a: "Proverb"}
+                {q: "Find light in your darkest moments.", a: "Aristotle"}
             ],
             ja: [
-                {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"},
                 {q: "最も暗い夜に、星は最も輝く。", a: "格言"},
-                {q: "小さな変化の中に、真実の生がある。", a: "レフ・톨스토이"}
-            ],
-            // ... 다른 언어도 같은 구조({q: "", a: ""})로 추가 가능합니다.
+                {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}
+            ]
+            // ... 다른 언어도 동일 구조로 추가
         };
 
         const selectEl = document.getElementById('language-select');
-        let savedLang = localStorage.getItem('userLang');
-        let browserLang = navigator.language.substring(0, 2);
-        let currentLang = savedLang || (languageData[browserLang] ? browserLang : 'en');
+        let currentLang = localStorage.getItem('userLang') || 
+                          (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'en');
         
         selectEl.value = currentLang;
 
@@ -209,35 +190,34 @@
         function updateUI() {
             const now = new Date();
             
+            // 1. 상단 메시지
             document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
             
+            // 2. 시간 (초 제외, 시:분만 표시하여 모던함 강조)
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
-            const s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
+            document.getElementById('digital-clock').innerText = `${h}:${m}`;
             
-            const dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-            document.getElementById('today-date').innerText = now.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : 'en-US', dateOptions);
+            // 3. 날짜
+            document.getElementById('today-date').innerText = now.toLocaleDateString('en-GB').replace(/\//g, '. ');
 
+            // 4. 낮밤 모드 (6시~18시)
             document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
 
+            // 5. 명언 (매일 갱신)
             let displayDate = new Date(now);
             if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
             const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
             
-            const currentList = languageData[currentLang] || languageData['en'];
-            const selectedQuote = currentList[dateSeed % currentList.length];
+            const list = languageData[currentLang] || languageData['en'];
+            const item = list[dateSeed % list.length];
             
-            // 명언과 저자 출력
-            document.getElementById('compliment').innerText = selectedQuote.q;
-            document.getElementById('author').innerText = `- ${selectedQuote.a}`;
-
-            const isRtl = currentLang === 'ar';
-            document.querySelector('.quote-box').style.direction = isRtl ? 'rtl' : 'ltr';
+            document.getElementById('compliment').innerText = item.q;
+            document.getElementById('author').innerText = item.a;
         }
 
-        updateUI();
         setInterval(updateUI, 1000);
+        updateUI();
     </script>
 </body>
 </html>
