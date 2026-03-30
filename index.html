@@ -3,28 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Wisdom - Moments of Light</title>
-    <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />
-    <style>
-        /* 모던한 폰트 불러오기 (Pretendard) */
-        @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+    <title>Daily Wisdom</title>
+    <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 
+    <style>
         :root {
-            --bg-day: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --text-day: #1a1a1a;
+            --bg-day: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            --text-day: #121212;
             --bg-night: linear-gradient(135deg, #0f172a 0%, #020617 100%);
             --text-night: #f8fafc;
-            --accent: #a29bfe; 
         }
 
         body {
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* 상단과 중앙 분리 */
             margin: 0;
-            font-family: 'Pretendard', -apple-system, sans-serif;
-            transition: background 1.5s ease, color 1.5s ease;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: background 1.2s ease, color 1.2s ease;
             overflow: hidden;
             position: relative;
         }
@@ -32,7 +29,7 @@
         body.day-mode { background: var(--bg-day); color: var(--text-day); }
         body.night-mode { background: var(--bg-night); color: var(--text-night); }
 
-        /* 언어 선택기 - 더 심플하게 */
+        /* 언어 선택기 */
         .lang-selector {
             position: absolute;
             top: 20px;
@@ -41,82 +38,79 @@
         }
 
         .lang-selector select {
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
             cursor: pointer;
-            border: 1px solid rgba(128, 128, 128, 0.2);
+            border: 1px solid rgba(128, 128, 128, 0.3);
             background: rgba(255, 255, 255, 0.1);
             color: inherit;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             outline: none;
-            transition: 0.3s;
         }
 
-        /* 1. 상단 메시지: 더 위로 배치 */
+        /* 1. 상단 메시지: Noto Sans Black(900) 적용 및 상단 밀착 */
         #top-message {
-            margin-top: 40px;
-            font-size: 0.95rem;
-            font-weight: 400;
-            letter-spacing: 0.2em; /* 자간을 넓혀 모던함 강조 */
+            margin-top: 30px; /* 더 위로 올림 */
+            font-size: 1.4rem; /* 크기 강조 */
+            font-weight: 900;  /* 가장 굵은 폰트 */
             text-align: center;
-            opacity: 0.6;
-            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
         }
 
-        /* 중앙 컨테이너: 간격 최적화 */
+        /* 중앙 콘텐츠 영역 */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 10%;
             text-align: center;
+            padding-bottom: 5vh; /* 약간 위쪽으로 중심 잡기 */
         }
 
-        /* 2. 시간 스타일: 세련되고 얇은 볼드 */
+        /* 2. 시간 스타일: 간결하고 모던하게 */
         #digital-clock {
-            font-size: 4.5rem;
-            font-weight: 700;
-            letter-spacing: -0.05em; /* 숫자는 붙여야 모던함 */
-            margin-bottom: 0; /* 간격 대폭 축소 */
+            font-size: 5.5rem;
+            font-weight: 900;
+            letter-spacing: -0.05em;
             line-height: 1;
+            margin-bottom: 0;
         }
 
         #today-date {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 400;
-            margin-bottom: 40px; /* 시간과 명언 사이의 적절한 거리 */
             opacity: 0.5;
-            letter-spacing: 0.1em;
+            margin-top: 5px;
+            margin-bottom: 40px;
         }
 
-        /* 3. 명언과 출처 간격 축소 */
+        /* 3. 명언 및 출처: 밀착 배치 */
         .quote-container {
-            max-width: 700px;
+            max-width: 80%;
         }
 
         #compliment {
             font-size: 1.8rem;
-            font-weight: 600;
+            font-weight: 700;
             line-height: 1.4;
             word-break: keep-all;
-            margin-bottom: 10px; /* 명언과 출처 사이 아주 좁게 */
+            margin-bottom: 8px; /* 출처와 간격 축소 */
         }
 
         #author {
-            font-size: 0.9rem;
-            font-weight: 300;
+            font-size: 1rem;
+            font-weight: 400;
             opacity: 0.4;
-            letter-spacing: 0.05em;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 480px) {
+            #top-message { font-size: 1.1rem; margin-top: 50px; }
             #digital-clock { font-size: 3.5rem; }
             #compliment { font-size: 1.4rem; }
-            #top-message { margin-top: 60px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -128,13 +122,10 @@
             <option value="en">EN</option>
             <option value="ja">JP</option>
             <option value="zh">CN</option>
-            <option value="fr">FR</option>
-            <option value="de">DE</option>
-            <option value="es">ES</option>
         </select>
     </div>
 
-    <div id="top-message">YOU ARE PRECIOUS EVERY DAY</div>
+    <div id="top-message">당신은 매일 소중합니다.</div>
 
     <div class="main-content">
         <div id="digital-clock">00:00</div>
@@ -148,31 +139,31 @@
 
     <script>
         const topMessages = {
-            ko: "당신은 매일 소중합니다",
-            en: "YOU ARE PRECIOUS EVERY DAY",
-            ja: "あなたは毎日大切です",
-            zh: "每一天的你都很珍贵",
-            fr: "TU ES PRÉCIEUX CHAQUE JOUR",
-            de: "DU BIST JEDEN TAG WERTVOLL",
-            es: "ERES VALIOSO CADA DÍA"
+            ko: "당신은 매일 소중합니다.",
+            en: "YOU ARE PRECIOUS EVERY DAY.",
+            ja: "あなたは毎日大切です。",
+            zh: "每一天的你都很珍贵。"
         };
 
         const languageData = {
             ko: [
-                {q: "가장 빛나는 별은 어두운 밤에 보인다.", a: "고전 격언"},
+                {q: "가장 빛나는 별은 가장 어두운 밤에 보인다.", a: "고전 격언"},
                 {q: "행복은 여정이지 목적지가 아니다.", a: "알프레드 디 수자"},
                 {q: "어둠 속에서도 빛을 발견하는 법을 배워라.", a: "아리스토텔레스"}
             ],
             en: [
-                {q: "Stars shine brightest in the dark.", a: "Proverb"},
+                {q: "The stars shine brightest in the darkest night.", a: "Proverb"},
                 {q: "Happiness is a journey, not a destination.", a: "Alfred D'Souza"},
-                {q: "Find light in your darkest moments.", a: "Aristotle"}
+                {q: "Learn to find light even in the dark.", a: "Aristotle"}
             ],
             ja: [
                 {q: "最も暗い夜に、星は最も輝く。", a: "格言"},
                 {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}
+            ],
+            zh: [
+                {q: "最亮的星出现在最黑暗的夜里。", a: "格言"},
+                {q: "幸福是旅程，而非终点。", a: "阿尔弗雷德·德索萨"}
             ]
-            // ... 다른 언어도 동일 구조로 추가
         };
 
         const selectEl = document.getElementById('language-select');
@@ -190,21 +181,23 @@
         function updateUI() {
             const now = new Date();
             
-            // 1. 상단 메시지
+            // 상단 메시지
             document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
             
-            // 2. 시간 (초 제외, 시:분만 표시하여 모던함 강조)
+            // 시간
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             document.getElementById('digital-clock').innerText = `${h}:${m}`;
             
-            // 3. 날짜
-            document.getElementById('today-date').innerText = now.toLocaleDateString('en-GB').replace(/\//g, '. ');
+            // 날짜
+            document.getElementById('today-date').innerText = now.getFullYear() + ". " + 
+                                                              String(now.getMonth()+1).padStart(2, '0') + ". " + 
+                                                              String(now.getDate()).padStart(2, '0');
 
-            // 4. 낮밤 모드 (6시~18시)
+            // 낮밤 배경
             document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
 
-            // 5. 명언 (매일 갱신)
+            // 명언 로직
             let displayDate = new Date(now);
             if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
             const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
@@ -213,7 +206,7 @@
             const item = list[dateSeed % list.length];
             
             document.getElementById('compliment').innerText = item.q;
-            document.getElementById('author').innerText = item.a;
+            document.getElementById('author').innerText = `- ${item.a}`;
         }
 
         setInterval(updateUI, 1000);
