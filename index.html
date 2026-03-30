@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Encouragement</title>
-    <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />
+    <meta name="google-site-verification" content="인증코드를_여기에_넣으세요" />
+
     <style>
         :root {
             --bg-day: linear-gradient(135deg, #e0f2f1 0%, #fce4ec 100%);
@@ -54,4 +55,175 @@
         }
 
         body.night-mode .lang-selector select {
-            background-color: rgba(44, 62, 80, 0.
+            background-color: rgba(44, 62, 80, 0.7);
+            color: #ecf0f1;
+            border: 2px solid rgba(162, 155, 254, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 850px;
+            width: 90%;
+        }
+
+        /* 추가된 상단 고정 문구 스타일 */
+        #top-message {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+
+        #digital-clock {
+            font-size: 3.2rem;
+            font-weight: 600; 
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        #today-date {
+            font-size: 1.6rem;
+            font-weight: 500; 
+            margin-bottom: 60px;
+            opacity: 0.7;
+        }
+
+        #compliment {
+            font-size: 2.3rem;
+            font-weight: 700;
+            line-height: 1.7;
+            word-break: keep-all;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+            #top-message { font-size: 1rem; }
+            #digital-clock { font-size: 2.2rem; }
+            #today-date { font-size: 1.1rem; }
+            #compliment { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body class="day-mode">
+
+    <div class="lang-selector">
+        <select id="language-select">
+            <option value="ko">KOREAN 🇰🇷</option>
+            <option value="en">ENGLISH 🇺🇸</option>
+            <option value="ja">JAPANESE 🇯🇵</option>
+            <option value="zh">CHINESE 🇨🇳</option>
+            <option value="es">SPANISH 🇪🇸</option>
+            <option value="fr">FRENCH 🇫🇷</option>
+            <option value="de">GERMAN 🇩🇪</option>
+            <option value="pt">PORTUGUESE 🇵🇹</option>
+            <option value="it">ITALIAN 🇮🇹</option>
+            <option value="ru">RUSSIAN 🇷🇺</option>
+            <option value="ar">ARABIC 🇸🇦</option>
+            <option value="hi">HINDI 🇮🇳</option>
+            <option value="vi">VIETNAMESE 🇻🇳</option>
+            <option value="th">THAI 🇹🇭</option>
+            <option value="id">INDONESIAN 🇮🇩</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <div id="top-message"></div>
+        <div id="digital-clock">00:00:00</div>
+        <div id="today-date">0000. 00. 00</div>
+        <div id="compliment">...</div>
+    </div>
+
+    <script>
+        // 상단 고정 문구 데이터
+        const topMessages = {
+            ko: "당신은 매일 소중합니다.",
+            en: "You are precious every single day.",
+            ja: "あなたは毎日大切です。",
+            zh: "每一天的你都很珍贵。",
+            es: "Eres valioso cada día.",
+            fr: "Tu es précieux chaque jour.",
+            de: "Du bist jeden Tag wertvoll.",
+            pt: "Você é precioso todos os dias.",
+            it: "Sei prezioso ogni singolo giorno.",
+            ru: "Вы драгоценны каждый день.",
+            ar: "أنت ثمين في كل يوم.",
+            hi: "आप हर दिन अनमोल हैं।",
+            vi: "Bạn quý giá mỗi ngày.",
+            th: "คุณมีค่าในทุกๆ วัน",
+            id: "Anda berharga setiap hari."
+        };
+
+        const languageData = {
+            ko: ["오늘 당신의 걸음걸음마다 행운이 깃들길 바라요.", "당신은 충분히 잘해내고 있습니다.", "존재만으로도 소중한 당신을 응원합니다."],
+            en: ["May luck follow every step you take today.", "You are doing a great job. Believe in yourself.", "You are precious just as you are."],
+            ja: ["今日の一歩一歩に幸運が宿りますように。", "あなたは十分に頑張っています。", "あなたの存在そのものが宝物です。"],
+            zh: ["愿好运伴随你今天的每一步。", "你做得很好，请相信自己。", "你的存在本身就是一种美好。"],
+            es: ["Que la suerte acompañe cada paso que des hoy.", "Estás haciendo un gran trabajo.", "Eres una persona valiosa tal como eres."],
+            fr: ["Que la chance accompagne chacun de vos pas aujourd'hui.", "Vous faites du bon travail.", "Vous êtes précieux tel que vous êtes."],
+            de: ["Möge das Glück Sie heute auf jedem Schritt begleiten.", "Sie machen einen tollen Job.", "Du bist wertvoll, so wie du bist."],
+            pt: ["Que a sorte acompanhe cada passo que você der hoje.", "Você está fazendo um ótimo trabalho.", "Você é precioso do jeito que é."],
+            it: ["Che la fortuna accompagni ogni tuo passo oggi.", "Stai facendo un ottimo lavoro.", "Sei prezioso così come sei."],
+            ru: ["Пусть удача сопутствует каждому вашему шагу сегодня.", "Вы отлично справляетесь.", "Вы драгоценны такие, какие вы есть."],
+            ar: ["أتمنى أن يحالفك الحظ في كل خطوة تخطوها اليوم.", "أنت تبلي بلاءً حسناً. آمن بنفسك.", "أنت ثمين كما أنت."],
+            hi: ["आज आपके हर कदम पर भाग्य आपका साथ दे।", "आप बहुत अच्छा काम कर रहे हैं।", "आप जैसे हैं वैसे ही अनमोल हैं।"],
+            vi: ["Chúc may mắn theo mỗi bước chân của bạn hôm nay.", "Bạn đang làm rất tốt. Hãy tin vào chính mình.", "Bạn rất quý giá theo cách của riêng mình."],
+            th: ["ขอให้ความโชคดีติดตามคุณไปในทุกย่างก้าวในวันนี้", "คุณทำได้ดีมาก จงเชื่อมั่นในตัวเอง", "คุณมีค่าในแบบที่คุณเป็น"],
+            id: ["Semoga keberuntungan menyertai setiap langkahmu hari ini.", "Kamu melakukan pekerjaan yang hebat.", "Kamu berharga apa adanya."]
+        };
+
+        const selectEl = document.getElementById('language-select');
+        let savedLang = localStorage.getItem('userLang');
+        let browserLang = navigator.language.substring(0, 2);
+        let currentLang = savedLang || (languageData[browserLang] ? browserLang : 'en');
+        
+        selectEl.value = currentLang;
+
+        selectEl.addEventListener('change', (e) => {
+            currentLang = e.target.value;
+            localStorage.setItem('userLang', currentLang);
+            updateUI();
+        });
+
+        function updateUI() {
+            const now = new Date();
+            
+            // 1. 상단 고정 메시지 업데이트
+            document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
+            
+            // 2. 시계 및 날짜
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
+            
+            const dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            document.getElementById('today-date').innerText = now.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : 'en-US', dateOptions);
+
+            // 3. 낮밤 배경 및 선택기 디자인
+            document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
+
+            // 4. 하단 응원 문구 갱신 (오전 6시 기준)
+            let displayDate = new Date(now);
+            if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
+            const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
+            
+            const currentList = languageData[currentLang] || languageData['en'];
+            document.getElementById('compliment').innerText = currentList[dateSeed % currentList.length];
+
+            // 아랍어 우측 정렬
+            const isRtl = currentLang === 'ar';
+            document.getElementById('compliment').style.direction = isRtl ? 'rtl' : 'ltr';
+            document.getElementById('top-message').style.direction = isRtl ? 'rtl' : 'ltr';
+        }
+
+        updateUI();
+        setInterval(updateUI, 1000);
+    </script>
+</body>
+</html>
