@@ -9,30 +9,40 @@
 
     <style>
         :root {
-            /* 레퍼런스의 상징적인 그린 컬러 */
-            --point-green: #66cc33; 
-            --pure-white: #ffffff;
+            /* 1. 은은하고 가독성 좋은 '아침' 그라데이션 배경 (채도 낮춤) */
+            --bg-base: linear-gradient(135deg, #fce4ec 0%, #e1f5fe 100%); 
             --dark-text: #1a1a1a;
+            --pure-white: #ffffff;
         }
 
         body {
             height: 100vh;
             margin: 0;
             font-family: 'Noto Sans KR', sans-serif;
-            /* 전체 배경을 레퍼런스의 그린으로 설정 */
-            background-color: var(--point-green);
-            color: var(--pure-white);
+            background: var(--bg-base);
+            color: var(--dark-text);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
         }
 
-        /* 상단 메시지: 얇고 간결하게 (요청하신 70% 수준) */
+        /* 💡 레퍼런스 아이디어 반영: 배경에 은은한 스케치 낙서 추가 */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 10vh; left: 5vw; width: 100px; height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50,10 L60,40 L90,50 L60,60 L50,90 L40,60 L10,50 L40,40 Z' fill='none' stroke='%23fce4ec' stroke-width='3'/%3E%3C/svg%3E") no-repeat;
+            opacity: 0.5; /* 매우 은은하게 */
+            z-index: -1;
+        }
+
+        /* 상단 메시지 (가장 중요): 얇고 간결하게 (70% 축소 버전 유지) */
         #top-message {
             margin-top: 50px;
-            font-size: 0.7rem;
-            font-weight: 300;
-            letter-spacing: 0.2em;
+            font-size: 0.7rem; /* 크기 축소 */
+            font-weight: 300;  /* 가늘게 */
+            letter-spacing: 0.2em; /* 자간을 넓혀 고급스러움 유지 */
             text-align: center;
             opacity: 0.9;
         }
@@ -45,9 +55,10 @@
             justify-content: center;
             align-items: center;
             padding: 0 20px;
+            z-index: 10;
         }
 
-        /* 시간: 굵고 명확하게 */
+        /* 시간 스타일: 거대하고 굵게 (900 두께) */
         #digital-clock {
             font-size: 6rem;
             font-weight: 900;
@@ -59,25 +70,25 @@
         #today-date {
             font-size: 1.2rem;
             font-weight: 400;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             opacity: 0.8;
         }
 
-        /* 💡 가독성 핵심: 레퍼런스의 화이트 박스 레이아웃 반영 */
+        /* 가독성 최우선: 하얀색 명언 카드 */
         .quote-card {
             background-color: var(--pure-white);
-            color: var(--point-green); /* 글자색을 배경색인 그린으로 설정해 강렬한 대비 */
-            padding: 40px 50px;
+            color: var(--dark-text);
+            padding: 40px;
             width: 85%;
             max-width: 600px;
-            border-radius: 4px; /* 모던한 직선 느낌 */
+            border-radius: 4px;
             box-shadow: 20px 20px 0px rgba(0, 0, 0, 0.1); /* 그래픽적인 그림자 */
-            text-align: left; /* 레퍼런스의 포스터 느낌 */
+            text-align: left;
         }
 
         #compliment {
             font-size: 1.8rem;
-            font-weight: 900; /* 본문도 힘있게 */
+            font-weight: 900;
             line-height: 1.4;
             word-break: keep-all;
             margin-bottom: 15px;
@@ -86,8 +97,8 @@
         #author {
             font-size: 1rem;
             font-weight: 400;
-            opacity: 0.7;
-            border-top: 2px solid var(--point-green);
+            opacity: 0.6;
+            border-top: 2px solid var(--dark-text);
             padding-top: 10px;
             display: inline-block;
         }
@@ -101,17 +112,17 @@
 
         .lang-selector select {
             background: transparent;
-            border: 2px solid var(--pure-white);
-            color: var(--pure-white);
+            border: 2px solid var(--dark-text);
+            color: var(--dark-text);
             padding: 5px 10px;
             font-weight: 700;
-            border-radius: 0;
             cursor: pointer;
         }
 
         @media (max-width: 480px) {
+            #top-message { font-size: 0.6rem; }
             #digital-clock { font-size: 4rem; }
-            .quote-card { padding: 30px; }
+            .quote-card { padding: 30px; width: 90%; }
             #compliment { font-size: 1.4rem; }
         }
     </style>
@@ -137,7 +148,7 @@
         <div id="today-date">2026. 03. 31</div>
         
         <div class="quote-card">
-            <div id="compliment">...</div>
+            <div id="compliment">Loading Wisdom...</div>
             <div id="author"></div>
         </div>
     </div>
@@ -167,12 +178,16 @@
             ja: [
                 {q: "最も暗い夜に星は輝く。", a: "格言"},
                 {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}
+            ],
+            zh: [
+                {q: "最亮的星出现在最暗的夜里。", a: "格言"},
+                {q: "幸福是旅程，而非终点。", a: "阿尔弗雷德·德索萨"}
             ]
-            // ... (나머지 15개국어 데이터 동일 구조 적용)
         };
 
         const selectEl = document.getElementById('language-select');
-        let currentLang = localStorage.getItem('userLang') || 'ko';
+        let currentLang = localStorage.getItem('userLang') || 
+                          (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'ko');
         selectEl.value = currentLang;
 
         selectEl.addEventListener('change', (e) => {
@@ -183,10 +198,20 @@
 
         function updateUI() {
             const now = new Date();
+            // 상단 메시지
             document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
-            document.getElementById('digital-clock').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-            document.getElementById('today-date').innerText = now.toLocaleDateString('ko-KR').replace(/\//g, '. ');
+            
+            // 거대하고 굵은 시계 (분까지만 표시)
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('digital-clock').innerText = `${h}:${m}`;
+            
+            // 날짜
+            document.getElementById('today-date').innerText = now.getFullYear() + ". " + 
+                                                              String(now.getMonth()+1).padStart(2, '0') + ". " + 
+                                                              String(now.getDate()).padStart(2, '0');
 
+            // 명언 로직
             let displayDate = new Date(now);
             if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
             const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
