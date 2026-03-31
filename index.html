@@ -52,13 +52,13 @@
 
         /* 상단 메시지: Noto Sans Black 900 & 촘촘한 간격 */
         #top-message {
-            margin-top: 45px;
-            font-size: 1.0rem;
-            font-weight: 750;
+            margin-top: 40px;
+            font-size: 1.5rem;
+            font-weight: 900;
             text-align: center;
             /* 글자 간격을 더 촘촘하게 수정함 (-0.05em) */
-            letter-spacing: -0.05em; 
-            line-height: 1.0;
+            letter-spacing: -0.06em; 
+            line-height: 1.1;
         }
 
         /* 중앙 메인 콘텐츠 */
@@ -206,4 +206,13 @@
             document.getElementById('compliment').innerText = item.q;
             document.getElementById('author').innerText = `- ${item.a}`;
             
-            const isRtl = currentLang
+            const isRtl = currentLang === 'ar';
+            document.querySelector('.main-content').style.direction = isRtl ? 'rtl' : 'ltr';
+            document.getElementById('top-message').style.direction = isRtl ? 'rtl' : 'ltr';
+        }
+
+        setInterval(updateUI, 1000);
+        updateUI();
+    </script>
+</body>
+</html>
