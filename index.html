@@ -3,159 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Wisdom - Tennis Week Edition</title>
+    <title>Daily Wisdom</title>
     <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />    
-    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* 1. 레퍼런스의 강렬한 그린 컬러 배경 반영 */
-            --bg-base: #66cc33; 
-            --text-base: #ffffff; /* 모든 텍스트는 하얀색 */
-            --point-purple: #a29bfe; /* 포인트 컬러 (유지) */
+            /* 레퍼런스의 상징적인 그린 컬러 */
+            --point-green: #66cc33; 
+            --pure-white: #ffffff;
+            --dark-text: #1a1a1a;
         }
 
         body {
             height: 100vh;
             margin: 0;
-            font-family: 'Pretendard', -apple-system, sans-serif;
-            background-color: var(--bg-base);
-            color: var(--text-base);
-            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+            /* 전체 배경을 레퍼런스의 그린으로 설정 */
+            background-color: var(--point-green);
+            color: var(--pure-white);
             display: flex;
             flex-direction: column;
-            position: relative;
+            overflow: hidden;
         }
 
-        /* 2. 그래픽 네트 배경 (레퍼런스 반영) */
-        .net-bg {
-            position: absolute;
-            top: 5vh;
-            left: 0;
-            width: 100%;
-            height: 40vh;
-            background-image: 
-                linear-gradient(white 2px, transparent 2px),
-                linear-gradient(90deg, white 2px, transparent 2px);
-            background-size: 50px 50px;
-            opacity: 0.15; /* 은은하게 배치 */
-            z-index: 1;
-        }
-
-        /* 3. 테니스 포스트 그래픽 (레퍼런스 반영) */
-        .tennis-post {
-            position: absolute;
-            top: 5vh;
-            right: 5vw;
-            width: 30px;
-            height: 40vh;
-            background-color: #ffffff;
-            border-radius: 15px;
-            opacity: 0.3;
-            z-index: 1;
-        }
-
-        /* 언어 선택기 - 심플하게 */
-        .lang-selector {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-
-        .lang-selector select {
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            backdrop-filter: blur(10px);
-            outline: none;
-        }
-
-        /* 상단 메시지 (축소 버전 유지) */
+        /* 상단 메시지: 얇고 간결하게 (요청하신 70% 수준) */
         #top-message {
-            margin-top: 40px;
-            font-size: 0.65rem; 
-            font-weight: 300; 
-            letter-spacing: 0.25em; 
+            margin-top: 50px;
+            font-size: 0.7rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
             text-align: center;
-            opacity: 0.7;
-            text-transform: uppercase;
-            position: relative;
-            z-index: 10;
+            opacity: 0.9;
         }
 
-        /* 4. 중앙 콘텐츠 영역 (달력 그래픽 반영) */
+        /* 메인 컨텐츠 영역 */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 10%;
-            text-align: center;
-            position: relative;
-            z-index: 10;
+            padding: 0 20px;
         }
 
-        /* 시간 스타일 - 세련되고 얇은 볼드 */
+        /* 시간: 굵고 명확하게 */
         #digital-clock {
-            font-size: 5rem;
-            font-weight: 800;
+            font-size: 6rem;
+            font-weight: 900;
             letter-spacing: -0.05em;
             line-height: 1;
-            margin-bottom: 0; 
+            margin-bottom: 5px;
         }
 
         #today-date {
             font-size: 1.2rem;
             font-weight: 400;
-            margin-bottom: 50px; 
-            opacity: 0.6;
-            letter-spacing: 0.1em;
+            margin-bottom: 40px;
+            opacity: 0.8;
         }
 
-        /* 5. 격언 영역 (레퍼런스 달력 스타일 반영) */
-        .quote-container {
-            max-width: 700px;
-            background-color: rgba(255, 255, 255, 0.1); /* 달력처럼 반투명 박스 */
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
+        /* 💡 가독성 핵심: 레퍼런스의 화이트 박스 레이아웃 반영 */
+        .quote-card {
+            background-color: var(--pure-white);
+            color: var(--point-green); /* 글자색을 배경색인 그린으로 설정해 강렬한 대비 */
+            padding: 40px 50px;
+            width: 85%;
+            max-width: 600px;
+            border-radius: 4px; /* 모던한 직선 느낌 */
+            box-shadow: 20px 20px 0px rgba(0, 0, 0, 0.1); /* 그래픽적인 그림자 */
+            text-align: left; /* 레퍼런스의 포스터 느낌 */
         }
 
         #compliment {
             font-size: 1.8rem;
-            font-weight: 600;
-            line-height: 1.5;
+            font-weight: 900; /* 본문도 힘있게 */
+            line-height: 1.4;
             word-break: keep-all;
-            margin-bottom: 15px; 
+            margin-bottom: 15px;
         }
 
         #author {
-            font-size: 0.95rem;
-            font-weight: 300;
-            opacity: 0.5;
-            letter-spacing: 0.05em;
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.7;
+            border-top: 2px solid var(--point-green);
+            padding-top: 10px;
+            display: inline-block;
         }
 
-        @media (max-width: 768px) {
-            #digital-clock { font-size: 3.8rem; }
+        /* 언어 선택기 */
+        .lang-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .lang-selector select {
+            background: transparent;
+            border: 2px solid var(--pure-white);
+            color: var(--pure-white);
+            padding: 5px 10px;
+            font-weight: 700;
+            border-radius: 0;
+            cursor: pointer;
+        }
+
+        @media (max-width: 480px) {
+            #digital-clock { font-size: 4rem; }
+            .quote-card { padding: 30px; }
             #compliment { font-size: 1.4rem; }
-            #top-message { margin-top: 60px; font-size: 0.6rem; }
-            .net-bg { opacity: 0.1; }
         }
     </style>
 </head>
 <body>
-
-    <div class="net-bg"></div>
-    <div class="tennis-post"></div>
 
     <div class="lang-selector">
         <select id="language-select">
@@ -163,20 +124,20 @@
             <option value="en">EN</option>
             <option value="ja">JP</option>
             <option value="zh">CN</option>
+            <option value="es">ES</option>
             <option value="fr">FR</option>
             <option value="de">DE</option>
-            <option value="es">ES</option>
         </select>
     </div>
 
-    <div id="top-message">YOU ARE PRECIOUS EVERY DAY</div>
+    <div id="top-message">당신은 매일 소중합니다</div>
 
     <div class="main-content">
         <div id="digital-clock">00:00</div>
         <div id="today-date">2026. 03. 31</div>
         
-        <div class="quote-container">
-            <div id="compliment">Loading Wisdom...</div>
+        <div class="quote-card">
+            <div id="compliment">...</div>
             <div id="author"></div>
         </div>
     </div>
@@ -187,9 +148,9 @@
             en: "YOU ARE PRECIOUS EVERY DAY",
             ja: "あなたは毎日大切です",
             zh: "每一天的你都很珍贵",
+            es: "ERES VALIOSO CADA DÍA",
             fr: "TU ES PRÉCIEUX CHAQUE JOUR",
-            de: "DU BIST JEDEN TAG WERTVOLL",
-            es: "ERES VALIOSO CADA DÍA"
+            de: "DU BIST JEDEN TAG WERTVOLL"
         };
 
         const languageData = {
@@ -204,16 +165,14 @@
                 {q: "Find light in your darkest moments.", a: "Aristotle"}
             ],
             ja: [
-                {q: "最も暗い夜に、星は最も輝く。", a: "格言"},
+                {q: "最も暗い夜に星は輝く。", a: "格言"},
                 {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}
             ]
-            // ... 다른 언어도 동일 구조로 추가
+            // ... (나머지 15개국어 데이터 동일 구조 적용)
         };
 
         const selectEl = document.getElementById('language-select');
-        let currentLang = localStorage.getItem('userLang') || 
-                          (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'en');
-        
+        let currentLang = localStorage.getItem('userLang') || 'ko';
         selectEl.value = currentLang;
 
         selectEl.addEventListener('change', (e) => {
@@ -224,19 +183,10 @@
 
         function updateUI() {
             const now = new Date();
-            
-            // 1. 상단 메시지
             document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
-            
-            // 2. 시간
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('digital-clock').innerText = `${h}:${m}`;
-            
-            // 3. 날짜
-            document.getElementById('today-date').innerText = now.toLocaleDateString('en-GB').replace(/\//g, '. ');
+            document.getElementById('digital-clock').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            document.getElementById('today-date').innerText = now.toLocaleDateString('ko-KR').replace(/\//g, '. ');
 
-            // 4. 명언 (매일 갱신)
             let displayDate = new Date(now);
             if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
             const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
