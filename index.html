@@ -3,36 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Wisdom - Moments of Light</title>
-    <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />
-    <style>
-        /* 모던한 폰트 불러오기 (Pretendard) */
-        @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+    <title>Daily Wisdom - Tennis Week Edition</title>
+    <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />    
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
+    <style>
         :root {
-            --bg-day: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --text-day: #1a1a1a;
-            --bg-night: linear-gradient(135deg, #0f172a 0%, #020617 100%);
-            --text-night: #f8fafc;
-            --accent: #a29bfe; 
+            /* 1. 레퍼런스의 강렬한 그린 컬러 배경 반영 */
+            --bg-base: #66cc33; 
+            --text-base: #ffffff; /* 모든 텍스트는 하얀색 */
+            --point-purple: #a29bfe; /* 포인트 컬러 (유지) */
         }
 
         body {
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; 
             margin: 0;
             font-family: 'Pretendard', -apple-system, sans-serif;
-            transition: background 1.5s ease, color 1.5s ease;
+            background-color: var(--bg-base);
+            color: var(--text-base);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
             position: relative;
         }
 
-        body.day-mode { background: var(--bg-day); color: var(--text-day); }
-        body.night-mode { background: var(--bg-night); color: var(--text-night); }
+        /* 2. 그래픽 네트 배경 (레퍼런스 반영) */
+        .net-bg {
+            position: absolute;
+            top: 5vh;
+            left: 0;
+            width: 100%;
+            height: 40vh;
+            background-image: 
+                linear-gradient(white 2px, transparent 2px),
+                linear-gradient(90deg, white 2px, transparent 2px);
+            background-size: 50px 50px;
+            opacity: 0.15; /* 은은하게 배치 */
+            z-index: 1;
+        }
 
-        /* 언어 선택기 */
+        /* 3. 테니스 포스트 그래픽 (레퍼런스 반영) */
+        .tennis-post {
+            position: absolute;
+            top: 5vh;
+            right: 5vw;
+            width: 30px;
+            height: 40vh;
+            background-color: #ffffff;
+            border-radius: 15px;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        /* 언어 선택기 - 심플하게 */
         .lang-selector {
             position: absolute;
             top: 20px;
@@ -41,33 +64,32 @@
         }
 
         .lang-selector select {
-            padding: 6px 10px;
+            padding: 8px 12px;
             border-radius: 8px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
-            border: 1px solid rgba(128, 128, 128, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.1);
-            color: inherit;
+            color: #ffffff;
             backdrop-filter: blur(10px);
             outline: none;
-            transition: 0.3s;
         }
 
-        /* 1. 상단 메시지: 크기와 굵기 70% 축소 적용 */
+        /* 상단 메시지 (축소 버전 유지) */
         #top-message {
-            margin-top: 50px; /* 위치는 유지하되 약간 하단으로 조정 */
-            /* 기존 0.95rem의 약 70% 수준인 0.65rem 적용 */
+            margin-top: 40px;
             font-size: 0.65rem; 
-            /* 기존 400(Regular)의 약 70% 수준인 300(Light) 적용 */
             font-weight: 300; 
-            letter-spacing: 0.25em; /* 자간을 더 넓혀 고급스러움 유지 */
+            letter-spacing: 0.25em; 
             text-align: center;
-            opacity: 0.5; /* 불투명도를 살짝 낮춰 더 은은하게 */
+            opacity: 0.7;
             text-transform: uppercase;
+            position: relative;
+            z-index: 10;
         }
 
-        /* 중앙 컨테이너 */
+        /* 4. 중앙 콘텐츠 영역 (달력 그래픽 반영) */
         .main-content {
             flex: 1;
             display: flex;
@@ -76,53 +98,64 @@
             align-items: center;
             padding: 0 10%;
             text-align: center;
+            position: relative;
+            z-index: 10;
         }
 
-        /* 시간 스타일 */
+        /* 시간 스타일 - 세련되고 얇은 볼드 */
         #digital-clock {
-            font-size: 4.5rem;
-            font-weight: 700;
+            font-size: 5rem;
+            font-weight: 800;
             letter-spacing: -0.05em;
-            margin-bottom: 0; 
             line-height: 1;
+            margin-bottom: 0; 
         }
 
         #today-date {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 400;
-            margin-bottom: 40px; 
-            opacity: 0.5;
+            margin-bottom: 50px; 
+            opacity: 0.6;
             letter-spacing: 0.1em;
         }
 
-        /* 명언과 출처 영역 */
+        /* 5. 격언 영역 (레퍼런스 달력 스타일 반영) */
         .quote-container {
             max-width: 700px;
+            background-color: rgba(255, 255, 255, 0.1); /* 달력처럼 반투명 박스 */
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
         }
 
         #compliment {
             font-size: 1.8rem;
             font-weight: 600;
-            line-height: 1.4;
+            line-height: 1.5;
             word-break: keep-all;
-            margin-bottom: 10px; 
+            margin-bottom: 15px; 
         }
 
         #author {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 300;
-            opacity: 0.4;
+            opacity: 0.5;
             letter-spacing: 0.05em;
         }
 
         @media (max-width: 768px) {
-            #digital-clock { font-size: 3.5rem; }
+            #digital-clock { font-size: 3.8rem; }
             #compliment { font-size: 1.4rem; }
-            #top-message { margin-top: 70px; font-size: 0.6rem; }
+            #top-message { margin-top: 60px; font-size: 0.6rem; }
+            .net-bg { opacity: 0.1; }
         }
     </style>
 </head>
-<body class="day-mode">
+<body>
+
+    <div class="net-bg"></div>
+    <div class="tennis-post"></div>
 
     <div class="lang-selector">
         <select id="language-select">
@@ -203,10 +236,7 @@
             // 3. 날짜
             document.getElementById('today-date').innerText = now.toLocaleDateString('en-GB').replace(/\//g, '. ');
 
-            // 4. 낮밤 모드 (6시~18시)
-            document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
-
-            // 5. 명언 (매일 갱신)
+            // 4. 명언 (매일 갱신)
             let displayDate = new Date(now);
             if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
             const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
