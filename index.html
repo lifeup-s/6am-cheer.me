@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Wisdom</title>
-    <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />    
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
-
+    <title>Daily Wisdom - Moments of Light</title>
+    <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />
     <style>
+        /* 모던한 폰트 불러오기 (Pretendard) */
+        @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
         :root {
-            --bg-day: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            --text-day: #121212;
+            --bg-day: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --text-day: #1a1a1a;
             --bg-night: linear-gradient(135deg, #0f172a 0%, #020617 100%);
             --text-night: #f8fafc;
+            --accent: #a29bfe; 
         }
 
         body {
             height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: space-between; 
             margin: 0;
-            font-family: 'Noto Sans KR', sans-serif;
-            transition: background 1.2s ease, color 1.2s ease;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            transition: background 1.5s ease, color 1.5s ease;
             overflow: hidden;
             position: relative;
         }
@@ -29,7 +32,7 @@
         body.day-mode { background: var(--bg-day); color: var(--text-day); }
         body.night-mode { background: var(--bg-night); color: var(--text-night); }
 
-        /* 언어 선택기 (우측 상단 미니멀 디자인) */
+        /* 언어 선택기 */
         .lang-selector {
             position: absolute;
             top: 20px;
@@ -38,83 +41,84 @@
         }
 
         .lang-selector select {
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 6px 10px;
+            border-radius: 8px;
             font-size: 0.7rem;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             border: 1px solid rgba(128, 128, 128, 0.2);
             background: rgba(255, 255, 255, 0.1);
             color: inherit;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             outline: none;
+            transition: 0.3s;
         }
 
-        /* 상단 메시지: Noto Sans Black 900 & 촘촘한 간격 */
+        /* 1. 상단 메시지: 크기와 굵기 70% 축소 적용 */
         #top-message {
-            margin-top: 40px;
-            font-size: 1.0rem;
-            font-weight: 750;
+            margin-top: 50px; /* 위치는 유지하되 약간 하단으로 조정 */
+            /* 기존 0.95rem의 약 70% 수준인 0.65rem 적용 */
+            font-size: 0.65rem; 
+            /* 기존 400(Regular)의 약 70% 수준인 300(Light) 적용 */
+            font-weight: 300; 
+            letter-spacing: 0.25em; /* 자간을 더 넓혀 고급스러움 유지 */
             text-align: center;
-            /* 글자 간격을 더 촘촘하게 수정함 (-0.05em) */
-            letter-spacing: -0.05em; 
-            line-height: 1.0;
+            opacity: 0.5; /* 불투명도를 살짝 낮춰 더 은은하게 */
+            text-transform: uppercase;
         }
 
-        /* 중앙 메인 콘텐츠 */
+        /* 중앙 컨테이너 */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
             padding: 0 10%;
+            text-align: center;
         }
 
-        /* 시간: 굵고 압도적인 디자인 */
+        /* 시간 스타일 */
         #digital-clock {
-            font-size: 5.5rem;
-            font-weight: 900;
-            letter-spacing: -0.06em;
+            font-size: 4.5rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            margin-bottom: 0; 
             line-height: 1;
-            margin-bottom: 0;
         }
 
-        /* 날짜: 가볍고 정갈하게 */
         #today-date {
             font-size: 1.1rem;
             font-weight: 400;
-            opacity: 0.4;
-            margin-top: 5px;
-            margin-bottom: 50px;
-            letter-spacing: 0.05em;
+            margin-bottom: 40px; 
+            opacity: 0.5;
+            letter-spacing: 0.1em;
         }
 
-        /* 명언 박스: 밀착된 간격 */
+        /* 명언과 출처 영역 */
         .quote-container {
-            max-width: 800px;
+            max-width: 700px;
         }
 
         #compliment {
-            font-size: 1.9rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 600;
             line-height: 1.4;
             word-break: keep-all;
-            margin-bottom: 10px;
+            margin-bottom: 10px; 
         }
 
         #author {
-            font-size: 1rem;
-            font-weight: 400;
+            font-size: 0.9rem;
+            font-weight: 300;
             opacity: 0.4;
-            font-style: italic;
+            letter-spacing: 0.05em;
         }
 
-        @media (max-width: 480px) {
-            #top-message { font-size: 1.2rem; margin-top: 60px; }
-            #digital-clock { font-size: 3.8rem; }
-            #compliment { font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            #digital-clock { font-size: 3.5rem; }
+            #compliment { font-size: 1.4rem; }
+            #top-message { margin-top: 70px; font-size: 0.6rem; }
         }
     </style>
 </head>
@@ -122,67 +126,61 @@
 
     <div class="lang-selector">
         <select id="language-select">
-            <option value="ko">KR</option><option value="en">EN</option>
-            <option value="ja">JP</option><option value="zh">CN</option>
-            <option value="es">ES</option><option value="fr">FR</option>
-            <option value="de">DE</option><option value="pt">PT</option>
-            <option value="it">IT</option><option value="ru">RU</option>
-            <option value="ar">AR</option><option value="hi">HI</option>
-            <option value="vi">VN</option><option value="th">TH</option>
-            <option value="id">ID</option>
+            <option value="ko">KR</option>
+            <option value="en">EN</option>
+            <option value="ja">JP</option>
+            <option value="zh">CN</option>
+            <option value="fr">FR</option>
+            <option value="de">DE</option>
+            <option value="es">ES</option>
         </select>
     </div>
 
-    <div id="top-message">당신은 매일 소중합니다.</div>
+    <div id="top-message">YOU ARE PRECIOUS EVERY DAY</div>
 
     <div class="main-content">
         <div id="digital-clock">00:00</div>
         <div id="today-date">2026. 03. 31</div>
+        
         <div class="quote-container">
-            <div id="compliment">...</div>
+            <div id="compliment">Loading Wisdom...</div>
             <div id="author"></div>
         </div>
     </div>
 
     <script>
         const topMessages = {
-            ko: "당신은 매일 소중합니다.",
-            en: "YOU ARE PRECIOUS EVERY DAY.",
-            ja: "あなたは毎日大切です。",
-            zh: "每一天的你都很珍贵。",
-            es: "ERES VALIOSO CADA DÍA.",
-            fr: "TU ES PRÉCIEUX CHAQUE JOUR.",
-            de: "DU BIST JEDEN TAG WERTVOLL.",
-            pt: "VOCÊ É PRECIOSO TODOS OS DIAS.",
-            it: "SEI PREZIOSO OGNI GIORNO.",
-            ru: "ВЫ ДРАГОЦЕННЫ КАЖДЫЙ ДЕНЬ.",
-            ar: "أنت ثمين في كل يوم.",
-            hi: "आप हर दिन अनमोल हैं।",
-            vi: "BẠN QUÝ GIÁ MỖI NGÀY.",
-            th: "คุณมีค่าในทุกๆ วัน",
-            id: "ANDA BERHARGA SETIAP HARI."
+            ko: "당신은 매일 소중합니다",
+            en: "YOU ARE PRECIOUS EVERY DAY",
+            ja: "あなたは毎日大切です",
+            zh: "每一天的你都很珍贵",
+            fr: "TU ES PRÉCIEUX CHAQUE JOUR",
+            de: "DU BIST JEDEN TAG WERTVOLL",
+            es: "ERES VALIOSO CADA DÍA"
         };
 
         const languageData = {
-            ko: [{q: "행복은 여정이지 목적지가 아니다.", a: "알프레드 디 수자"}, {q: "가장 빛나는 별은 어두운 밤에 보인다.", a: "격언"}],
-            en: [{q: "Happiness is a journey, not a destination.", a: "Alfred D'Souza"}, {q: "Stars shine brightest in the dark.", a: "Proverb"}],
-            ja: [{q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}, {q: "最も暗い夜に星は輝く。", a: "格言"}],
-            zh: [{q: "幸福是旅程，而非终点。", a: "阿尔弗雷德·德索萨"}, {q: "最亮的星出现在最暗的夜。", a: "格言"}],
-            es: [{q: "La felicidad es un viaje, no un destino.", a: "Alfred D'Souza"}, {q: "Las estrellas brillan en la oscuridad.", a: "Proverbio"}],
-            fr: [{q: "Le bonheur est un voyage, pas une destination.", a: "Alfred D'Souza"}, {q: "Les étoiles brillent dans le noir.", a: "Proverbe"}],
-            de: [{q: "Glück ist eine Reise, kein Ziel.", a: "Alfred D'Souza"}, {q: "Sterne leuchten in der Nacht am hellsten.", a: "Sprichwort"}],
-            pt: [{q: "A felicidade é uma viagem, não um destino.", a: "Alfred D'Souza"}, {q: "As estrelas brilham na noite escura.", a: "Provérbio"}],
-            it: [{q: "La felicità è un viaggio, non una meta.", a: "Alfred D'Souza"}, {q: "Le stelle brillano nell'oscurità.", a: "Proverbio"}],
-            ru: [{q: "Счастье — это путь, а не пункт назначения.", a: "Альфред Д'Суза"}, {q: "Звезды светят ярче в темноте.", a: "Пословица"}],
-            ar: [{q: "السعادة رحلة وليس وجهة.", a: "ألفريد دي سوزا"}, {q: "النجوم تتألق في أحلك الليالي.", a: "مثل"}],
-            hi: [{q: "खुशी एक यात्रा है, मंजिल नहीं।", a: "अल्फ्रेड डी सूजा"}, {q: "तारे अंधेरे में सबसे ज्यादा चमकते हैं।", a: "कहावत"}],
-            vi: [{q: "Hạnh phúc là hành trình, không phải đích đến.", a: "Alfred D'Souza"}, {q: "Ngôi sao sáng nhất trong đêm tối.", a: "Tục ngữ"}],
-            th: [{q: "ความสุขคือการเดินทาง ไม่ใช่จุดหมาย", a: "Alfred D'Souza"}, {q: "ดาวจะสว่างที่สุดในคืนที่มืดมิด", a: "ภาษิต"}],
-            id: [{q: "Kebahagiaan adalah perjalanan, bukan tujuan.", a: "Alfred D'Souza"}, {q: "Bintang bersinar paling terang di kegelapan.", a: "Pepatah"}]
+            ko: [
+                {q: "가장 빛나는 별은 어두운 밤에 보인다.", a: "고전 격언"},
+                {q: "행복은 여정이지 목적지가 아니다.", a: "알프레드 디 수자"},
+                {q: "어둠 속에서도 빛을 발견하는 법을 배워라.", a: "아리스토텔레스"}
+            ],
+            en: [
+                {q: "Stars shine brightest in the dark.", a: "Proverb"},
+                {q: "Happiness is a journey, not a destination.", a: "Alfred D'Souza"},
+                {q: "Find light in your darkest moments.", a: "Aristotle"}
+            ],
+            ja: [
+                {q: "最も暗い夜に、星は最も輝く。", a: "格言"},
+                {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}
+            ]
+            // ... 다른 언어도 동일 구조로 추가
         };
 
         const selectEl = document.getElementById('language-select');
-        let currentLang = localStorage.getItem('userLang') || (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'en');
+        let currentLang = localStorage.getItem('userLang') || 
+                          (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'en');
+        
         selectEl.value = currentLang;
 
         selectEl.addEventListener('change', (e) => {
@@ -193,22 +191,31 @@
 
         function updateUI() {
             const now = new Date();
-            document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
-            document.getElementById('digital-clock').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-            document.getElementById('today-date').innerText = now.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : 'en-US', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\//g, '. ');
-            document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
             
+            // 1. 상단 메시지
+            document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
+            
+            // 2. 시간
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('digital-clock').innerText = `${h}:${m}`;
+            
+            // 3. 날짜
+            document.getElementById('today-date').innerText = now.toLocaleDateString('en-GB').replace(/\//g, '. ');
+
+            // 4. 낮밤 모드 (6시~18시)
+            document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
+
+            // 5. 명언 (매일 갱신)
             let displayDate = new Date(now);
             if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
             const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
+            
             const list = languageData[currentLang] || languageData['en'];
             const item = list[dateSeed % list.length];
-            document.getElementById('compliment').innerText = item.q;
-            document.getElementById('author').innerText = `- ${item.a}`;
             
-            const isRtl = currentLang === 'ar';
-            document.querySelector('.main-content').style.direction = isRtl ? 'rtl' : 'ltr';
-            document.getElementById('top-message').style.direction = isRtl ? 'rtl' : 'ltr';
+            document.getElementById('compliment').innerText = item.q;
+            document.getElementById('author').innerText = item.a;
         }
 
         setInterval(updateUI, 1000);
