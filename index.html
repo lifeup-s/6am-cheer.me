@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Wisdom - Nature Horizon</title>
+    <title>Daily Wisdom - Natural Symphony</title>
     
     <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
 
     <style>
@@ -14,23 +14,31 @@
             margin: 0; padding: 0; height: 100%;
             font-family: 'Noto Sans KR', sans-serif;
             overflow: hidden;
+            transition: color 1s ease; /* 텍스트 색상 부드럽게 전환 */
         }
 
-        /* 1. 싱그러운 산과 하늘 배경 */
+        /* 1. 배경 사진 영역 및 시간별 이미지 설정 */
         .background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             z-index: -1;
+            transition: background-image 1.5s ease-in-out; /* 배경 이미지 부드럽게 전환 */
         }
 
+        /* 기본 오버레이 (가독성 확보) */
         .background::before {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.1); /* 밝고 싱그러운 느낌 유지 */
+            background: rgba(0, 0, 0, 0.1); 
+            transition: background 1.5s ease-in-out;
+        }
+
+        /* 💡 밤 모드일 때 배경 오버레이를 더 어둡게 처리 */
+        body.night-mode .background::before {
+            background: rgba(0, 0, 0, 0.4); 
         }
 
         .container {
@@ -42,8 +50,8 @@
             padding: 60px 20px;
             box-sizing: border-box;
             text-align: center;
-            color: #ffffff;
-            text-shadow: 0px 2px 15px rgba(0, 0, 0, 0.3);
+            color: #ffffff; /* 기본 하얀색 텍스트 */
+            text-shadow: 0px 2px 15px rgba(0, 0, 0, 0.4);
         }
 
         /* 상단: 당신은 매일 소중합니다 (70% 축소 유지) */
@@ -54,19 +62,19 @@
             opacity: 0.9;
         }
 
-        /* 💡 중앙: 응원 메시지 (정가운데 배치) */
+        /* 중앙: 응원 메시지 (정가운데 배치) */
         .center-quote {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             max-width: 650px;
+            position: relative;
         }
 
         #compliment {
             font-size: 2.2rem; /* 메시지 강조 */
             font-weight: 900;
-            color: #fffde7; /* 싱그러운 연노랑 */
             line-height: 1.4;
             word-break: keep-all;
             margin-bottom: 15px;
@@ -78,13 +86,13 @@
             font-weight: 400;
         }
 
-        /* 💡 하단: 시간과 날짜 (아래로 이동) */
+        /* 하단: 시간과 날짜 */
         .bottom-clock {
             margin-bottom: 20px;
         }
 
         #digital-clock {
-            font-size: 4rem; /* 하단이므로 크기 살짝 조정 */
+            font-size: 4rem;
             font-weight: 800;
             letter-spacing: -0.02em;
         }
@@ -94,6 +102,11 @@
             font-weight: 400;
             opacity: 0.8;
             margin-top: 5px;
+        }
+
+        /* 💡 밤 모드 타이포그래피 포인트: 명언 색상을 연노랑색으로 변경 */
+        body.night-mode #compliment {
+            color: #fffde7; /* 싱그러운 연노랑 */
         }
 
         .lang-selector {
@@ -110,6 +123,8 @@
             border-radius: 8px;
             font-size: 0.75rem;
             backdrop-filter: blur(5px);
+            outline: none;
+            cursor: pointer;
         }
 
         @media (max-width: 480px) {
@@ -118,9 +133,7 @@
         }
     </style>
 </head>
-<body>
-
-    <div class="background"></div>
+<body class="day-mode"> <div id="main-background" class="background"></div>
 
     <div class="lang-selector">
         <select id="language-select">
@@ -135,7 +148,7 @@
         <div id="top-message">당신은 매일 소중합니다</div>
 
         <div class="center-quote">
-            <div id="compliment">새로운 하루가 시작되었습니다.</div>
+            <div id="compliment">Loading Wisdom...</div>
             <div id="author"></div>
         </div>
 
@@ -162,11 +175,20 @@
             en: [
                 {q: "Stars shine brightest in the dark.", a: "Proverb"},
                 {q: "Happiness is a journey, not a destination.", a: "Alfred D'Souza"}
+            ],
+            ja: [
+                {q: "最も暗い夜に、星は最も輝く。", a: "格言"},
+                {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}
+            ],
+            zh: [
+                {q: "最亮的星出现在最暗의夜里。", a: "格言"},
+                {q: "幸福是旅程，而非终点。", a: "阿尔弗雷德·德索萨"}
             ]
         };
 
         const selectEl = document.getElementById('language-select');
-        let currentLang = localStorage.getItem('userLang') || 'ko';
+        let currentLang = localStorage.getItem('userLang') || 
+                          (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'ko');
         selectEl.value = currentLang;
 
         selectEl.addEventListener('change', (e) => {
@@ -178,6 +200,25 @@
         function updateUI() {
             const now = new Date();
             
+            // 1. 낮/밤 시간 판단 (오전 6시 ~ 오후 6시 기준)
+            const hours = now.getHours();
+            const isDay = hours >= 6 && hours < 18;
+            
+            const bodyEl = document.body;
+            const bgEl = document.getElementById('main-background');
+            
+            // 2. 시간별 배경 이미지 및 클래스 설정
+            if (isDay) {
+                // 낮 시간 배경 (싱그러운 산과 호수)
+                bgEl.style.backgroundImage = "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop')";
+                bodyEl.className = 'day-mode';
+            } else {
+                // 밤 시간 배경 (차분한 은하수 밤하늘)
+                bgEl.style.backgroundImage = "url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop')";
+                bodyEl.className = 'night-mode';
+            }
+            
+            // 상단 메시지
             document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
             
             // 시계 (초 단위 포함)
@@ -186,11 +227,18 @@
             const s = String(now.getSeconds()).padStart(2, '0');
             document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
             
+            // 날짜
             document.getElementById('today-date').innerText = now.getFullYear() + ". " + 
                                                               String(now.getMonth()+1).padStart(2, '0') + ". " + 
                                                               String(now.getDate()).padStart(2, '0');
 
-            const dateSeed = now.getDate();
+            // 명언 로직
+            let displayDate = new Date(now);
+            // 밤 12시부터 새벽 6시까지는 이전 날짜의 격언을 유지하여 차분한 분위기 유지
+            if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
+            
+            const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
+            
             const list = languageData[currentLang] || languageData['en'];
             const item = list[dateSeed % list.length];
             
@@ -198,7 +246,7 @@
             document.getElementById('author').innerText = `- ${item.a}`;
         }
 
-        setInterval(updateUI, 1000);
+        setInterval(updateUI, 1000); // 1초 간격 업데이트
         updateUI();
     </script>
 </body>
