@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Wisdom - Fresh Nature</title>
+    <title>Daily Wisdom - Nature Horizon</title>
     
     <meta name="google-site-verification" content="Lv8vn0m8j5zG1dkw8WTzH57VCQofxCsoT_sMCJ8QI_c" />
     
@@ -20,19 +20,17 @@
         .background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* 산과 푸른 들판이 있는 싱그러운 이미지 */
             background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             z-index: -1;
         }
 
-        /* 배경 밝기 및 대비 조절 오버레이 */
         .background::before {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.15); /* 글자가 잘 보이도록 살짝 어둡게 처리 */
+            background: rgba(0, 0, 0, 0.1); /* 밝고 싱그러운 느낌 유지 */
         }
 
         .container {
@@ -41,65 +39,61 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 50px 20px;
+            padding: 60px 20px;
             box-sizing: border-box;
             text-align: center;
             color: #ffffff;
-            /* 가독성을 위한 텍스트 그림자 */
-            text-shadow: 0px 2px 15px rgba(0, 0, 0, 0.4);
+            text-shadow: 0px 2px 15px rgba(0, 0, 0, 0.3);
         }
 
-        /* 상단 메시지: 70% 축소 적용 */
+        /* 상단: 당신은 매일 소중합니다 (70% 축소 유지) */
         #top-message {
             font-size: 0.75rem;
             font-weight: 300;
             letter-spacing: 0.25em;
-            opacity: 0.95;
+            opacity: 0.9;
         }
 
-        /* 중앙 시계: 초 단위 포함 및 굵게 */
-        .clock-section {
-            margin-top: -2vh;
-        }
-
-        #digital-clock {
-            font-size: 5.5rem;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-            line-height: 1;
-        }
-
-        #today-date {
-            font-size: 1.3rem;
-            font-weight: 400;
-            margin-top: 10px;
-            opacity: 0.8;
-        }
-
-        /* 하단 명언: 싱그러운 옐로우 포인트 */
-        .quote-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            padding: 35px 25px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            width: 85%;
-            max-width: 550px;
-            margin-bottom: 30px;
+        /* 💡 중앙: 응원 메시지 (정가운데 배치) */
+        .center-quote {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 650px;
         }
 
         #compliment {
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 2.2rem; /* 메시지 강조 */
+            font-weight: 900;
             color: #fffde7; /* 싱그러운 연노랑 */
-            margin-bottom: 12px;
+            line-height: 1.4;
             word-break: keep-all;
+            margin-bottom: 15px;
         }
 
         #author {
-            font-size: 0.95rem;
-            opacity: 0.7;
-            font-weight: 300;
+            font-size: 1rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        /* 💡 하단: 시간과 날짜 (아래로 이동) */
+        .bottom-clock {
+            margin-bottom: 20px;
+        }
+
+        #digital-clock {
+            font-size: 4rem; /* 하단이므로 크기 살짝 조정 */
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        #today-date {
+            font-size: 1.1rem;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-top: 5px;
         }
 
         .lang-selector {
@@ -109,19 +103,18 @@
         }
 
         .lang-selector select {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.5);
             color: white;
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 8px;
             font-size: 0.75rem;
-            cursor: pointer;
-            outline: none;
+            backdrop-filter: blur(5px);
         }
 
         @media (max-width: 480px) {
-            #digital-clock { font-size: 3.8rem; }
-            #compliment { font-size: 1.3rem; }
+            #compliment { font-size: 1.6rem; }
+            #digital-clock { font-size: 3rem; }
         }
     </style>
 </head>
@@ -135,22 +128,20 @@
             <option value="en">EN</option>
             <option value="ja">JP</option>
             <option value="zh">CN</option>
-            <option value="es">ES</option>
-            <option value="fr">FR</option>
         </select>
     </div>
 
     <div class="container">
         <div id="top-message">당신은 매일 소중합니다</div>
 
-        <div class="clock-section">
-            <div id="digital-clock">00:00:00</div>
-            <div id="today-date">2026. 03. 31</div>
+        <div class="center-quote">
+            <div id="compliment">새로운 하루가 시작되었습니다.</div>
+            <div id="author"></div>
         </div>
 
-        <div class="quote-card">
-            <div id="compliment">Loading...</div>
-            <div id="author"></div>
+        <div class="bottom-clock">
+            <div id="digital-clock">00:00:00</div>
+            <div id="today-date">2026. 03. 31</div>
         </div>
     </div>
 
@@ -159,28 +150,18 @@
             ko: "당신은 매일 소중합니다",
             en: "YOU ARE PRECIOUS EVERY DAY",
             ja: "あなたは毎日大切です",
-            zh: "每一天的你都很珍贵",
-            es: "ERES VALIOSO CADA DÍA",
-            fr: "TU ES PRÉCIEUX CHAQUE JOUR"
+            zh: "每一天的你都很珍贵"
         };
 
         const languageData = {
             ko: [
                 {q: "가장 빛나는 별은 어두운 밤에 보인다.", a: "고전 격언"},
                 {q: "행복은 여정이지 목적지가 아니다.", a: "알프레드 디 수자"},
-                {q: "싱그러운 오늘, 당신의 미소가 가장 아름답습니다.", a: "오늘의 응원"}
+                {q: "오늘의 햇살은 오직 당신을 위해 준비되었습니다.", a: "오늘의 응원"}
             ],
             en: [
                 {q: "Stars shine brightest in the dark.", a: "Proverb"},
                 {q: "Happiness is a journey, not a destination.", a: "Alfred D'Souza"}
-            ],
-            ja: [
-                {q: "最も暗い夜に、星は最も輝く。", a: "格言"},
-                {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}
-            ],
-            zh: [
-                {q: "最亮的星出现在最暗的夜里。", a: "格言"},
-                {q: "幸福是旅程，而非终点。", a: "阿尔弗雷德·德索萨"}
             ]
         };
 
@@ -199,7 +180,7 @@
             
             document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
             
-            // 시계 업데이트 (초 단위)
+            // 시계 (초 단위 포함)
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             const s = String(now.getSeconds()).padStart(2, '0');
@@ -209,7 +190,6 @@
                                                               String(now.getMonth()+1).padStart(2, '0') + ". " + 
                                                               String(now.getDate()).padStart(2, '0');
 
-            // 명언 로직
             const dateSeed = now.getDate();
             const list = languageData[currentLang] || languageData['en'];
             const item = list[dateSeed % list.length];
