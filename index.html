@@ -29,7 +29,7 @@
         body.day-mode { background: var(--bg-day); color: var(--text-day); }
         body.night-mode { background: var(--bg-night); color: var(--text-night); }
 
-        /* 언어 선택기 */
+        /* 언어 선택기 (우측 상단 미니멀 디자인) */
         .lang-selector {
             position: absolute;
             top: 20px;
@@ -38,29 +38,30 @@
         }
 
         .lang-selector select {
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 4px;
             font-size: 0.7rem;
             font-weight: 700;
             cursor: pointer;
-            border: 1px solid rgba(128, 128, 128, 0.3);
+            border: 1px solid rgba(128, 128, 128, 0.2);
             background: rgba(255, 255, 255, 0.1);
             color: inherit;
             backdrop-filter: blur(8px);
             outline: none;
         }
 
-        /* 1. 상단 메시지: Noto Sans Black(900) 적용 및 상단 밀착 */
+        /* 상단 메시지: Noto Sans Black 900 & 촘촘한 간격 */
         #top-message {
-            margin-top: 45px; /* 더 위로 올림 */
-            font-size: 0.8rem; /* 크기 강조 */
-            font-weight: 750;  /* 가장 굵은 폰트 */
+            margin-top: 45px;
+            font-size: 1.0rem;
+            font-weight: 750;
             text-align: center;
-            letter-spacing: -0.05em;
-            line-height: 1.2;
+            /* 글자 간격을 더 촘촘하게 수정함 (-0.05em) */
+            letter-spacing: -0.05em; 
+            line-height: 1.0;
         }
 
-        /* 중앙 콘텐츠 영역 */
+        /* 중앙 메인 콘텐츠 */
         .main-content {
             flex: 1;
             display: flex;
@@ -68,49 +69,52 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-bottom: 5vh; /* 약간 위쪽으로 중심 잡기 */
+            padding: 0 10%;
         }
 
-        /* 2. 시간 스타일: 간결하고 모던하게 */
+        /* 시간: 굵고 압도적인 디자인 */
         #digital-clock {
             font-size: 5.5rem;
             font-weight: 900;
-            letter-spacing: -0.05em;
+            letter-spacing: -0.06em;
             line-height: 1;
             margin-bottom: 0;
         }
 
+        /* 날짜: 가볍고 정갈하게 */
         #today-date {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 400;
-            opacity: 0.5;
+            opacity: 0.4;
             margin-top: 5px;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
+            letter-spacing: 0.05em;
         }
 
-        /* 3. 명언 및 출처: 밀착 배치 */
+        /* 명언 박스: 밀착된 간격 */
         .quote-container {
-            max-width: 80%;
+            max-width: 800px;
         }
 
         #compliment {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             font-weight: 700;
             line-height: 1.4;
             word-break: keep-all;
-            margin-bottom: 8px; /* 출처와 간격 축소 */
+            margin-bottom: 10px;
         }
 
         #author {
             font-size: 1rem;
             font-weight: 400;
             opacity: 0.4;
+            font-style: italic;
         }
 
         @media (max-width: 480px) {
-            #top-message { font-size: 1.1rem; margin-top: 50px; }
-            #digital-clock { font-size: 3.5rem; }
-            #compliment { font-size: 1.4rem; }
+            #top-message { font-size: 1.2rem; margin-top: 60px; }
+            #digital-clock { font-size: 3.8rem; }
+            #compliment { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -118,10 +122,14 @@
 
     <div class="lang-selector">
         <select id="language-select">
-            <option value="ko">KR</option>
-            <option value="en">EN</option>
-            <option value="ja">JP</option>
-            <option value="zh">CN</option>
+            <option value="ko">KR</option><option value="en">EN</option>
+            <option value="ja">JP</option><option value="zh">CN</option>
+            <option value="es">ES</option><option value="fr">FR</option>
+            <option value="de">DE</option><option value="pt">PT</option>
+            <option value="it">IT</option><option value="ru">RU</option>
+            <option value="ar">AR</option><option value="hi">HI</option>
+            <option value="vi">VN</option><option value="th">TH</option>
+            <option value="id">ID</option>
         </select>
     </div>
 
@@ -130,9 +138,8 @@
     <div class="main-content">
         <div id="digital-clock">00:00</div>
         <div id="today-date">2026. 03. 31</div>
-        
         <div class="quote-container">
-            <div id="compliment">Loading Wisdom...</div>
+            <div id="compliment">...</div>
             <div id="author"></div>
         </div>
     </div>
@@ -142,34 +149,40 @@
             ko: "당신은 매일 소중합니다.",
             en: "YOU ARE PRECIOUS EVERY DAY.",
             ja: "あなたは毎日大切です。",
-            zh: "每一天的你都很珍贵。"
+            zh: "每一天的你都很珍贵。",
+            es: "ERES VALIOSO CADA DÍA.",
+            fr: "TU ES PRÉCIEUX CHAQUE JOUR.",
+            de: "DU BIST JEDEN TAG WERTVOLL.",
+            pt: "VOCÊ É PRECIOSO TODOS OS DIAS.",
+            it: "SEI PREZIOSO OGNI GIORNO.",
+            ru: "ВЫ ДРАГОЦЕННЫ КАЖДЫЙ ДЕНЬ.",
+            ar: "أنت ثمين في كل يوم.",
+            hi: "आप हर दिन अनमोल हैं।",
+            vi: "BẠN QUÝ GIÁ MỖI NGÀY.",
+            th: "คุณมีค่าในทุกๆ วัน",
+            id: "ANDA BERHARGA SETIAP HARI."
         };
 
         const languageData = {
-            ko: [
-                {q: "가장 빛나는 별은 가장 어두운 밤에 보인다.", a: "고전 격언"},
-                {q: "행복은 여정이지 목적지가 아니다.", a: "알프레드 디 수자"},
-                {q: "어둠 속에서도 빛을 발견하는 법을 배워라.", a: "아리스토텔레스"}
-            ],
-            en: [
-                {q: "The stars shine brightest in the darkest night.", a: "Proverb"},
-                {q: "Happiness is a journey, not a destination.", a: "Alfred D'Souza"},
-                {q: "Learn to find light even in the dark.", a: "Aristotle"}
-            ],
-            ja: [
-                {q: "最も暗い夜に、星は最も輝く。", a: "格言"},
-                {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}
-            ],
-            zh: [
-                {q: "最亮的星出现在最黑暗的夜里。", a: "格言"},
-                {q: "幸福是旅程，而非终点。", a: "阿尔弗雷德·德索萨"}
-            ]
+            ko: [{q: "행복은 여정이지 목적지가 아니다.", a: "알프레드 디 수자"}, {q: "가장 빛나는 별은 어두운 밤에 보인다.", a: "격언"}],
+            en: [{q: "Happiness is a journey, not a destination.", a: "Alfred D'Souza"}, {q: "Stars shine brightest in the dark.", a: "Proverb"}],
+            ja: [{q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}, {q: "最も暗い夜に星は輝く。", a: "格言"}],
+            zh: [{q: "幸福是旅程，而非终点。", a: "阿尔弗雷德·德索萨"}, {q: "最亮的星出现在最暗的夜。", a: "格言"}],
+            es: [{q: "La felicidad es un viaje, no un destino.", a: "Alfred D'Souza"}, {q: "Las estrellas brillan en la oscuridad.", a: "Proverbio"}],
+            fr: [{q: "Le bonheur est un voyage, pas une destination.", a: "Alfred D'Souza"}, {q: "Les étoiles brillent dans le noir.", a: "Proverbe"}],
+            de: [{q: "Glück ist eine Reise, kein Ziel.", a: "Alfred D'Souza"}, {q: "Sterne leuchten in der Nacht am hellsten.", a: "Sprichwort"}],
+            pt: [{q: "A felicidade é uma viagem, não um destino.", a: "Alfred D'Souza"}, {q: "As estrelas brilham na noite escura.", a: "Provérbio"}],
+            it: [{q: "La felicità è un viaggio, non una meta.", a: "Alfred D'Souza"}, {q: "Le stelle brillano nell'oscurità.", a: "Proverbio"}],
+            ru: [{q: "Счастье — это путь, а не пункт назначения.", a: "Альфред Д'Суза"}, {q: "Звезды светят ярче в темноте.", a: "Пословица"}],
+            ar: [{q: "السعادة رحلة وليس وجهة.", a: "ألفريد دي سوزا"}, {q: "النجوم تتألق في أحلك الليالي.", a: "مثل"}],
+            hi: [{q: "खुशी एक यात्रा है, मंजिल नहीं।", a: "अल्फ्रेड डी सूजा"}, {q: "तारे अंधेरे में सबसे ज्यादा चमकते हैं।", a: "कहावत"}],
+            vi: [{q: "Hạnh phúc là hành trình, không phải đích đến.", a: "Alfred D'Souza"}, {q: "Ngôi sao sáng nhất trong đêm tối.", a: "Tục ngữ"}],
+            th: [{q: "ความสุขคือการเดินทาง ไม่ใช่จุดหมาย", a: "Alfred D'Souza"}, {q: "ดาวจะสว่างที่สุดในคืนที่มืดมิด", a: "ภาษิต"}],
+            id: [{q: "Kebahagiaan adalah perjalanan, bukan tujuan.", a: "Alfred D'Souza"}, {q: "Bintang bersinar paling terang di kegelapan.", a: "Pepatah"}]
         };
 
         const selectEl = document.getElementById('language-select');
-        let currentLang = localStorage.getItem('userLang') || 
-                          (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'en');
-        
+        let currentLang = localStorage.getItem('userLang') || (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'en');
         selectEl.value = currentLang;
 
         selectEl.addEventListener('change', (e) => {
@@ -180,37 +193,17 @@
 
         function updateUI() {
             const now = new Date();
-            
-            // 상단 메시지
             document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
-            
-            // 시간
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('digital-clock').innerText = `${h}:${m}`;
-            
-            // 날짜
-            document.getElementById('today-date').innerText = now.getFullYear() + ". " + 
-                                                              String(now.getMonth()+1).padStart(2, '0') + ". " + 
-                                                              String(now.getDate()).padStart(2, '0');
-
-            // 낮밤 배경
+            document.getElementById('digital-clock').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            document.getElementById('today-date').innerText = now.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : 'en-US', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\//g, '. ');
             document.body.className = (now.getHours() >= 6 && now.getHours() < 18) ? 'day-mode' : 'night-mode';
-
-            // 명언 로직
+            
             let displayDate = new Date(now);
             if (now.getHours() < 6) displayDate.setDate(now.getDate() - 1);
             const dateSeed = (displayDate.getFullYear() * 10000) + ((displayDate.getMonth() + 1) * 100) + displayDate.getDate();
-            
             const list = languageData[currentLang] || languageData['en'];
             const item = list[dateSeed % list.length];
-            
             document.getElementById('compliment').innerText = item.q;
             document.getElementById('author').innerText = `- ${item.a}`;
-        }
-
-        setInterval(updateUI, 1000);
-        updateUI();
-    </script>
-</body>
-</html>
+            
+            const isRtl = currentLang
