@@ -17,7 +17,6 @@
             transition: color 1s ease;
         }
 
-        /* 1. 배경 사진 영역 */
         .background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -82,7 +81,6 @@
             font-weight: 400;
         }
 
-        /* 하단 영역 설정 */
         .bottom-section {
             display: flex;
             flex-direction: column;
@@ -90,7 +88,6 @@
             margin-bottom: 20px;
         }
 
-        /* 방문자 카운트 스타일 */
         .visitor-counter {
             font-size: 0.8rem;
             font-weight: 300;
@@ -122,33 +119,3 @@
             top: 20px; right: 20px;
             z-index: 100;
         }
-
-        .lang-selector select {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            backdrop-filter: blur(5px);
-            outline: none;
-            cursor: pointer;
-        }
-
-        @media (max-width: 480px) {
-            #compliment { font-size: 1.6rem; }
-            #digital-clock { font-size: 3rem; }
-        }
-    </style>
-</head>
-<body class="day-mode">
-    <div id="main-background" class="background"></div>
-
-    <div class="lang-selector">
-        <select id="language-select">
-            <option value="ko">KR</option>
-            <option value="en">EN</option>
-            <option value="ja">JP</option>
-            <option value="zh">CN</option>
-        </select>
-    </div>
