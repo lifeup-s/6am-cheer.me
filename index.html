@@ -119,3 +119,153 @@
             top: 20px; right: 20px;
             z-index: 100;
         }
+
+        .lang-selector select {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            backdrop-filter: blur(5px);
+            outline: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 480px) {
+            #compliment { font-size: 1.6rem; }
+            #digital-clock { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body class="day-mode">
+    <div id="main-background" class="background"></div>
+
+    <div class="lang-selector">
+        <select id="language-select">
+            <option value="ko">KR</option>
+            <option value="en">EN</option>
+            <option value="ja">JP</option>
+            <option value="zh">CN</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <div id="top-message">당신은 매일 소중합니다</div>
+
+        <div class="center-quote">
+            <div id="compliment">Loading Wisdom...</div>
+            <div id="author"></div>
+        </div>
+
+        <div class="bottom-section">
+            <div class="visitor-counter">
+                Visitors: <span id="visit-count">0</span>
+            </div>
+            
+            <div id="digital-clock">00:00:00</div>
+            <div id="today-date">2026. 03. 31</div>
+        </div>
+    </div>
+
+    <script>
+        const topMessages = {
+            ko: "당신은 매일 소중합니다",
+            en: "YOU ARE PRECIOUS EVERY DAY",
+            ja: "あなたは毎日大切です",
+            zh: "每一天的你都很珍贵"
+        };
+
+        // 💡 명언 데이터를 더 추가했습니다.
+        const languageData = {
+            ko: [
+                {q: "가장 빛나는 별은 어두운 밤에 보인다.", a: "고전 격언"},
+                {q: "행복은 여정이지 목적지가 아니다.", a: "알프레드 디 수자"},
+                {q: "오늘의 햇살은 오직 당신을 위해 준비되었습니다.", a: "오늘의 응원"},
+                {q: "작은 기쁨들이 모여 큰 행복이 됩니다.", a: "자연의 소리"},
+                {q: "당신의 존재만으로도 세상은 더 아름답습니다.", a: "오늘의 편지"},
+                {q: "멈추지 않는다면 얼마나 천천히 가느냐는 중요치 않다.", a: "공자"}
+            ],
+            en: [
+                {q: "Stars shine brightest in the dark.", a: "Proverb"},
+                {q: "Happiness is a journey, not a destination.", a: "Alfred D'Souza"},
+                {q: "Believe in yourself and all that you are.", a: "Christian D. Larson"}
+            ],
+            ja: [
+                {q: "最も暗い夜に、星は最も輝く。", a: "格言"},
+                {q: "幸せは旅路であり、目的地ではない。", a: "アルフレッド・D・スーザ"}
+            ],
+            zh: [
+                {q: "最亮的星出现在最暗的夜里。", a: "格言"},
+                {q: "幸福是旅程，而非终点。", a: "阿尔弗雷德·德索萨"}
+            ]
+        };
+
+        const selectEl = document.getElementById('language-select');
+        let currentLang = localStorage.getItem('userLang') || 
+                          (languageData[navigator.language.substring(0, 2)] ? navigator.language.substring(0, 2) : 'ko');
+        selectEl.value = currentLang;
+
+        // 💡 페이지 로드 시 단 한 번만 랜덤하게 명언을 선택합니다.
+        // updateUI() 안에 넣으면 1초마다 문구가 바뀌어 정신없을 수 있기 때문입니다.
+        const list = languageData[currentLang] || languageData['en'];
+        let randomItem = list[Math.floor(Math.random() * list.length)];
+
+        selectEl.addEventListener('change', (e) => {
+            currentLang = e.target.value;
+            localStorage.setItem('userLang', currentLang);
+            // 언어 바꿀 때도 새로운 랜덤 명언 선택
+            const newList = languageData[currentLang] || languageData['en'];
+            randomItem = newList[Math.floor(Math.random() * newList.length)];
+            updateUI();
+        });
+
+        function updateVisitorCount() {
+            let count = localStorage.getItem('page_view');
+            if (!count) {
+                count = 1;
+            } else {
+                count = parseInt(count) + 1;
+            }
+            localStorage.setItem('page_view', count);
+            document.getElementById('visit-count').innerText = count.toLocaleString();
+        }
+
+        function updateUI() {
+            const now = new Date();
+            const hours = now.getHours();
+            const isDay = hours >= 6 && hours < 18;
+            
+            const bodyEl = document.body;
+            const bgEl = document.getElementById('main-background');
+            
+            if (isDay) {
+                bgEl.style.backgroundImage = "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop')";
+                bodyEl.className = 'day-mode';
+            } else {
+                bgEl.style.backgroundImage = "url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop')";
+                bodyEl.className = 'night-mode';
+            }
+            
+            document.getElementById('top-message').innerText = topMessages[currentLang] || topMessages['en'];
+            
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('digital-clock').innerText = `${h}:${m}:${s}`;
+            
+            document.getElementById('today-date').innerText = now.getFullYear() + ". " + 
+                                                              String(now.getMonth()+1).padStart(2, '0') + ". " + 
+                                                              String(now.getDate()).padStart(2, '0');
+
+            // 💡 위에서 미리 선택된 randomItem을 화면에 뿌려줍니다.
+            document.getElementById('compliment').innerText = randomItem.q;
+            document.getElementById('author').innerText = `- ${randomItem.a}`;
+        }
+
+        updateVisitorCount();
+        setInterval(updateUI, 1000);
+        updateUI();
+    </script>
+</body>
+</html>
